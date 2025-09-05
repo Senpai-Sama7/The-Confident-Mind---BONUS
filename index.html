@@ -1,62 +1,176 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>The Confident Mind — Reader Bonus</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Reader bonus for The Confident Mind. Scan the QR code in the book to access audio and video.">
-  <meta name="color-scheme" content="light dark">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Reader bonus for The Confident Mind: stream or download the companion audio and video." />
+  <meta name="color-scheme" content="light dark" />
+  <meta property="og:title" content="The Confident Mind — Reader Bonus" />
+  <meta property="og:description" content="Stream or download the bonus audio and video. QR codes included for easy access." />
+  <meta property="og:type" content="website" />
   <style>
-    :root{--bg:#0b0b0c;--fg:#f7f7f7;--muted:#a0a0a0}
-    @media (prefers-color-scheme: light){:root{--bg:#ffffff;--fg:#121212;--muted:#595959}}
+    :root{
+      --bg:#0b0c10; --fg:#f6f7f9; --muted:#9aa3ad; --card:#14171c; --line:#252b32; --accent:#5aa9ff;
+      --radius:18px; --shadow:0 12px 30px rgba(0,0,0,.35); --maxw:1100px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#ffffff; --fg:#0e1116; --muted:#5a6572; --card:#f5f7fa; --line:#e7ecf1; --accent:#2563eb }
+    }
     *{box-sizing:border-box}
-    html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
-    .wrap{min-height:100dvh;display:grid;place-items:center;padding:20px}
-    .card{max-width:min(92vw,800px);width:100%;text-align:center}
-    .cover{width:100%;height:auto;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    .meta{margin-top:12px;color:var(--muted);font-size:14px}
-    .err{margin-top:10px;font-size:13px;color:#ffb4b4}
+    html,body{margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial}
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:28px}
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,#5aa9ff,#7cc6ff)}
+    .title{font-weight:800; font-size:clamp(20px,3vw,28px); letter-spacing:.2px}
+    .badge{font-size:12px; padding:4px 10px; border-radius:999px; border:1px solid color-mix(in oklab, var(--accent) 40%, transparent); color:var(--accent); background:color-mix(in oklab, var(--accent) 12%, transparent)}
+    .grid{display:grid; grid-template-columns: 1.1fr .9fr; gap:22px}
+    @media (max-width:980px){ .grid{grid-template-columns:1fr} }
+    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .hero{display:grid; grid-template-rows:auto 1fr; gap:14px; padding:14px}
+    .cover{width:100%; border-radius:14px; display:block; background:#0e1116; object-fit:cover}
+    .note{font-size:13px; color:var(--muted); margin:0 8px 8px}
+    .panel{padding:16px}
+    .section{border-top:1px solid var(--line); padding:16px}
+    .section:first-child{border-top:none}
+    .h2{margin:0 0 8px 0; font-size:18px; font-weight:700}
+    .meta{font-size:13px; color:var(--muted)}
+    .row{display:flex; flex-wrap:wrap; gap:10px}
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid var(--line); color:var(--fg); background:transparent; text-decoration:none; cursor:pointer}
+    .btn:hover{background:rgba(127,127,127,.12)}
+    .btn.primary{background:var(--accent); color:#fff; border-color:color-mix(in oklab, var(--accent) 60%, #000)}
+    .btn.primary:hover{opacity:.95}
+    .stack{display:flex; flex-direction:column; gap:10px}
+    .qrgrid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width:620px){ .qrgrid{grid-template-columns:1fr} }
+    .qrbox{display:grid; place-items:center; background:var(--card); border:1px dashed var(--line); border-radius:12px; padding:12px}
+    canvas{background:#fff; border-radius:8px}
+    .linkline{font-size:12px; color:var(--muted); word-break:break-all}
+    footer{margin-top:22px; font-size:12px; color:var(--muted); display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap}
+    .hidden{display:none !important}
+    /* Print: render a clean QR sheet */
+    @media print{
+      header, .hero, .panel, .section.media, .section.buy, footer{display:none !important}
+      .print{display:block}
+      body{background:#fff; color:#000}
+      .wrap{max-width:none; padding:0}
+      .print .qrgrid{grid-template-columns:1fr 1fr}
+      .print h1{font-size:18px; margin:12px 0}
+      .linkline{font-size:10px; color:#000}
+    }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <div class="card">
-      <img id="cover" class="cover" alt="The Confident Mind — Book Cover">
-      <p class="meta">To access your bonus audio and video, scan the QR code printed inside the book.</p>
-      <div id="err" class="err" hidden>Cover image not found at <code>/assets/cover.jpg</code>. Check filename, extension, or Git LFS.</div>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">The Confident Mind — Reader Bonus</div>
+      </div>
+      <span class="badge">For readers</span>
+    </header>
+
+    <div class="grid">
+      <!-- Left: cover + quick explainer -->
+      <section class="card hero">
+        <img id="cover" class="cover" alt="The Confident Mind — Book Cover" />
+        <p class="note">Scan the printed QR in your book or use the buttons here to stream or download the bonus audio and video.</p>
+      </section>
+
+      <!-- Right: controls -->
+      <section class="card panel">
+        <!-- Buy -->
+        <div class="section buy">
+          <div class="h2">Buy the book</div>
+          <div class="row">
+            <a class="btn primary" id="buyBtn" href="https://www.amazon.com/s?k=The+Confident+Mind+Douglas+Mitchell" target="_blank" rel="noopener">Open on Amazon</a>
+          </div>
+          <div class="meta">Opens in a new tab.</div>
+        </div>
+
+        <!-- Audio -->
+        <div class="section media">
+          <div class="h2">Audio overview</div>
+          <div class="stack">
+            <audio id="playerAudio" controls preload="metadata" style="width:100%; border-radius:10px;"></audio>
+            <div class="row">
+              <a class="btn primary" id="audioStream" target="_blank" rel="noopener">Stream</a>
+              <a class="btn" id="audioDownload" download>Download</a>
+              <button class="btn" id="audioQRBtn">Show QR</button>
+              <button class="btn" id="copyAudio">Copy link</button>
+            </div>
+            <div class="meta" id="audioMeta">Detecting file…</div>
+            <div id="audioQRWrap" class="qrbox hidden">
+              <canvas id="qrAudio" width="320" height="320" aria-label="Audio QR"></canvas>
+              <div class="linkline" id="audioURLText"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video -->
+        <div class="section media">
+          <div class="h2">Video summary</div>
+          <div class="stack">
+            <video id="playerVideo" controls preload="metadata" playsinline style="width:100%; border-radius:10px;"></video>
+            <div class="row">
+              <a class="btn primary" id="videoStream" target="_blank" rel="noopener">Stream</a>
+              <a class="btn" id="videoDownload" download>Download</a>
+              <button class="btn" id="videoQRBtn">Show QR</button>
+              <button class="btn" id="copyVideo">Copy link</button>
+            </div>
+            <div class="meta" id="videoMeta">Detecting file…</div>
+            <div id="videoQRWrap" class="qrbox hidden">
+              <canvas id="qrVideo" width="320" height="320" aria-label="Video QR"></canvas>
+              <div class="linkline" id="videoURLText"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Print QR sheet -->
+        <div class="section">
+          <div class="h2">Print-ready QR sheet</div>
+          <div class="row">
+            <button class="btn" id="printQRs">Print QR codes</button>
+          </div>
+          <div class="meta">Generates a clean page with large QR codes for physical inserts.</div>
+        </div>
+      </section>
     </div>
-  </main>
 
+    <!-- Invisible print section (becomes visible in print mode) -->
+    <section id="printSheet" class="print hidden">
+      <div style="padding:16px">
+        <h1>The Confident Mind — Bonus QR Codes</h1>
+        <div class="qrgrid">
+          <div class="qrbox">
+            <div style="text-align:center; margin-bottom:6px; font-weight:600">Audio</div>
+            <canvas id="qrAudioPrint" width="512" height="512"></canvas>
+            <div class="linkline" id="audioURLTextPrint"></div>
+          </div>
+          <div class="qrbox">
+            <div style="text-align:center; margin-bottom:6px; font-weight:600">Video</div>
+            <canvas id="qrVideoPrint" width="512" height="512"></canvas>
+            <div class="linkline" id="videoURLTextPrint"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> The Confident Mind</div>
+      <div>Having issues? Check your connection or try the direct links below.</div>
+    </footer>
+  </div>
+
+  <!-- Minimal QR generator (inlined, MIT; adapted from qrcodejs) -->
   <script>
-    // Try common filenames and extensions, case-sensitive
-    const candidates = [
-      "assets/cover.jpg",
-      "assets/cover.jpeg",
-      "assets/cover.png",
-      "assets/Cover.jpg",
-      "assets/Cover.jpeg",
-      "assets/Cover.png"
-    ];
-    async function tryLoad(seq){
-      for(const path of seq){
-        try{
-          const r = await fetch(path, {method:"HEAD", cache:"no-store"});
-          if(r.ok){ document.getElementById("cover").src = path; return; }
-        }catch(_){}
-      }
-      document.getElementById("err").hidden = false;
-      // Fallback solid placeholder so layout isn’t blank
-      const ph = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
-        `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='1600'>
-           <rect width='100%' height='100%' fill='${matchMedia('(prefers-color-scheme: dark)').matches ? '#16161a' : '#e9ecef'}'/>
-           <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#888' font-family='system-ui' font-size='42'>
-             Cover not found
-           </text>
-         </svg>`);
-      document.getElementById("cover").src = ph;
-    }
-    tryLoad(candidates);
-  </script>
-</body>
-</html>
-
+  !function(){function E(t){this.mode=4,this.data=t}function O(t,e){this.typeNumber=t,this.errorCorrectLevel=e,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}
+  var r={ErrorCorrectLevel:{M:0},PAD0:236,PAD1:17};
+  E.prototype={getLength:function(){return this.data.length},write:function(t){for(var e=0;e<this.data.length;e++)t.put(this.data.charCodeAt(e),8)}};
+  var n=function(){this.buffer=[],this.length=0};n.prototype.put=function(t,e){for(var r=0;r<e;r++)this.putBit(t>>>e-r-1&1)},n.prototype.getLengthInBits=function(){return this.length},n.prototype.putBit=function(t){this.buffer.push(t?1:0),this.length++};
+  function d(t,e){for(;t.getLengthInBits()+4<=8*e;)t.put(0,4);for(;t.getLengthInBits()%8!=0;)t.put(0,1);for(;t.getLengthInBits()<8*e;)t.put(236,8),t.getLengthInBits()<8*e&&t.put(17,8)}
+  function s(t,e){var r=Array(e);for(var n=0;n<e;n++)r[n]=0;return r[0]=1,{get:function(t){return r[t]},set:function(t,e){r[t]=e},getLength:function(){for(var t=r.length-1;0==r[t]&&t>=0;)t--;return t+1},mod:function(n){if(this.getLength()-n.getLength()<0)return this;for(var o=this.getLength(),i=Array(o);i.set?i.set(r):i.splice.apply(i,[0,o].concat(r)),a=this.getLength()-n.getLength();a>=0;){for(var u=0;u<n.getLength();u++)i[u+a]^=n.get(u);for(;a>=0&&!i[a];)a--}return s(0,0),{get:function(t){return i[t]},getLength:function(){for(var t=i.length-1;0==i[t]&&t>=0;)t--;return t+1}}}}
+  function c(t,e){return[{totalCount:26,dataCount:19},{totalCount:44,dataCount:34},{totalCount:70,dataCount:55},{totalCount:100,dataCount:80},{totalCount:134,dataCount:108},{totalCount:172,dataCount:136},{totalCount:196,dataCount:154},{totalCount:242,dataCount:192},{totalCount:292,dataCount:230},{totalCount:346,dataCount:271},{totalCount:404,dataCount:321},{totalCount:466,dataCount:365},{totalCount:532,dataCount:432},{totalCount:581,dataCount:474},{totalCount:655,dataCount:513},{totalCount:733,dataCount:604},{totalCount:815,dataCount:691},{totalCount:901,dataCount:779},{totalCount:991,dataCount:857},{totalCount:1085,dataCount:949},{totalCount:1156,dataCount:1024},{totalCount:1258,dataCount:1111},{totalCount:1364,dataCount:1225},{totalCount:1474,dataCount:1341},{totalCount:1588,dataCount:1458},{totalCount:1706,dataCount:1576},{totalCount:1828,dataCount:1704},{totalCount:1921,dataCount:1787},{totalCount:2051,dataCount:1911},{totalCount:2185,dataCount:2045},{totalCount:2323,dataCount:2181},{totalCount:2465,da]()
