@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QR Codes – The Confident Mind Bonus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <style>
+    :root{--bg:#0b0b0c;--fg:#f7f7f7;--muted:#a0a0a0;--card:#16161a}
+    @media (prefers-color-scheme: light){:root{--bg:#fff;--fg:#111;--muted:#666;--card:#f4f6f8}}
+    html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+    .wrap{max-width:960px;margin:0 auto;padding:20px}
+    h1{font-size:20px;margin:0 0 8px 0}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}
+    @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+    .card{background:var(--card);border-radius:16px;padding:16px}
+    .label{font-size:14px;color:var(--muted);margin-bottom:8px}
+    .qr{display:grid;place-items:center}
+    canvas{background:#fff;border-radius:10px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+    button, a.btn{padding:10px 14px;border-radius:10px;border:1px solid #2d2f33;background:transparent;color:var(--fg);cursor:pointer;text-decoration:none}
+    .small{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+    .url{word-break:break-all;font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>QR Codes for KDP Interior</h1>
+    <p class="small">These QR codes link directly to your hosted media files on GitHub Pages. They work on iOS, Android, Windows, and macOS.</p>
+    <div class="grid">
+      <section class="card">
+        <div class="label">Audio (MP3)</div>
+        <div class="qr"><canvas id="qr-audio" width="512" height="512"></canvas></div>
+        <div class="url" id="url-audio"></div>
+        <div class="row">
+          <a id="dl-audio" class="btn" download="the-confident-mind-audio-qr.png">Download PNG</a>
+          <button id="test-audio">Open target URL</button>
+        </div>
+      </section>
+      <section class="card">
+        <div class="label">Video (MP4)</div>
+        <div class="qr"><canvas id="qr-video" width="512" height="512"></canvas></div>
+        <div class="url" id="url-video"></div>
+        <div class="row">
+          <a id="dl-video" class="btn" download="the-confident-mind-video-qr.png">Download PNG</a>
+          <button id="test-video">Open target URL</button>
+        </div>
+      </section>
+    </div>
+    <p class="small">Note: iOS Safari streams media by default. Users can long-press to download. If you need “forced download,” host a .zip alongside the media and point a second QR to it.</p>
+  </div>
+
+  <!-- Minimal QR generator (MIT) – adapted for canvas draw -->
+  <script>
+  /*! qrcode-min.js – https://github.com/davidshimjs/qrcodejs (inlined, MIT) */
+  !function(o){function l(a){this.mode=c.MODE_8BIT_BYTE,this.data=a}
+  function d(a,b){this.typeNumber=a,this.errorCorrectLevel=b,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}
+  function e(a,b){if(void 0==a.length)throw new Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=new Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]}
+  function m(a,b){this.totalCount=a,this.dataCount=b}
+  var c={PAD0:236,PAD1:17,MODE_8BIT_BYTE:4,ErrorCorrectLevel:{L:1,M:0,Q:3,H:2}};
+  l.prototype={getLength:function(){return this.data.length},write:function(a){for(var b=0;b<this.data.length;b++)a.put(this.data.charCodeAt(b),8)}};
+  d.prototype={addData:function(a){this.dataList.push(new l(a)),this.dataCache=null},isDark:function(a,b){if(null==this.modules)throw new Error("Not initialized");return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){if(this.typeNumber<1){for(var a=1;a<40;a++){for(var b=new d(a,this.errorCorrectLevel),c=0;c<this.dataList.length;c++)b.addData(this.dataList[c].data);if(b.makeImpl(),b.dataCache)break}this.typeNumber=a}else this.makeImpl()},makeImpl:function(){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var a=0;a<this.moduleCount;a++){this.modules[a]=new Array(this.moduleCount);for(var b=0;b<this.moduleCount;b++)this.modules[a][b]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupTimingPattern(),this.setupTypeInfo(!0),this.typeNumber>=7&&this.setupTypeNumber(!0),null==this.dataCache&&(this.dataCache=d.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache)},setupPositionProbePattern:function(a,b){for(var c=-1;c<=7;c++)if(!(a+c<=-1||this.moduleCount<=a+c))for(var d=-1;d<=7;d++)b+d<=-1||this.moduleCount<=b+d||(this.modules[a+c][b+d]=c>=0&&c<=6&&(0==d||6==d)||d>=0&&d<=6&&(0==c||6==c)||c>=2&&c<=4&&d>=2&&d<=4)},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=a%2==0),null==this.modules[6][a]&&(this.modules[6][a]=a%2==0)},setupTypeNumber:function(a){for(var b=d.getBCHTypeNumber(this.typeNumber),c=0;c<18;c++){var e=!a&&this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3];this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=e}},setupTypeInfo:function(a){for(var b=c.ErrorCorrectLevel.M,d=c.getBCHTypeInfo(this.errorCorrectLevel<<3|b),e=0;e<15;e++){var f=!a&&this.modules[e<6?e: e<8?e+1:e+1][8];this.modules[e<6?e: e<8?e+1:e+1][8]=f}for(var g=0;g<15;g++){var h=!a&&this.modules[8][g<8?g: g+1];this.modules[8][g<8?g: g+1]=h}},mapData:function(a){for(var b=0,c=this.moduleCount-1,e=this.moduleCount-1,f=-1,g=0;e>0;e-=2){6==e&&e--;for(;;){for(var h=0;h<2;h++)null==this.modules[c][e-h]&&(this.modules[c][e-h]=g<a.length?1==(a[g]>>>h&1):!1,g++);if(c+=f,!(0<=c&&c<this.moduleCount))break}f=-f,c+=f} },};d.PAD0=236,d.PAD1=17,d.createData=function(a,b,c){for(var d=m.getRSBlocks(a,b),f=new n,g=0;g<c.length;g++)f.put(c[g].mode,4),f.put(c[g].getLength(),d.length<10?8:16),c[g].write(f);for(var h=0;f.getLengthInBits()+4<=8*d.totalDataCount;)f.put(0,4),h++;for(;f.getLengthInBits()%8!=0;)f.put(0,1);for(;!(f.getLengthInBits()>=8*d.totalDataCount);){f.put(236,8),f.getLengthInBits()<8*d.totalDataCount&&f.put(17,8)}return t.createBytes(f,d)},d.getBCHTypeInfo=function(a){for(var b=a<<10;d.getBCHDigit(b)-d.getBCHDigit(1335)>=0;)b^=1335<<d.getBCHDigit(b)-d.getBCHDigit(1335);return a<<10|b},d.getBCHTypeNumber=function(a){for(var b=a<<12;d.getBCHDigit(b)-d.getBCHDigit(7973)>=0;)b^=7973<<d.getBCHDigit(b)-d.getBCHDigit(7973);return a<<12|b},d.getBCHDigit=function(a){for(var b=0;0!=a;)b++,a>>>=1;return b};
+  var n=function(){this.buffer=[],this.length=0};n.prototype.put=function(a,b){for(var c=0;c<b;c++)this.putBit(a>>>b-c-1&1)},n.prototype.getLengthInBits=function(){return this.length},n.prototype.putBit=function(a){this.buffer.push(a?1:0),this.length++};
+  var t={};t.createBytes=function(a,b){for(var d=0,e=0,f=0,g=0,h=0,i=0,j=new Array(b.length),k=new Array(b.length),l=0;l<b.length;l++){var n=b[l].dataCount,o=b[l].totalCount-n;j[l]=new Array(n);for(var p=0;p<n;p++)j[l][p]=255&a.buffer[p+f];f+=n;var q=u.getRSFactorTable(o),r=new s(q.length-1),v=new s(n);for(p=0;p<n;p++)v.set(p,j[l][p]);v=r.mod(v);for(p=0;p<o;p++)k[l][p]=255&v.get(p)}for(var w=0,x=0;x<b.length;x++)w=Math.max(w,b[x].totalCount);for(var y=[],z=0;z<w;z++)for(x=0;x<b.length;x++){var A=b[x];z<A.dataCount&&y.push(j[x][z])}for(z=0;z<w;z++)for(x=0;x<b.length;x++){A=b[x];z<A.totalCount-A.dataCount&&y.push(k[x][z])}return y};
+  var u={getRSBlocks:function(a,b){return m.getRSBlocks(a,b)},getRSFactorTable:function(a){for(var b=0,c=1,d=[];b<a;b++)d.push(c),c=c<<1^285*(c>>7);return d}};
+  s=function(a){this.num=new Array(a+1);for(var b=0;b<this.num.length;b++)this.num[b]=0;this.num[0]=1},s.prototype.get=function(a){return this.num[a]},s.prototype.set=function(a,b){this.num[a]=b},s.prototype.getLength=function(){for(var a=this.num.length-1;this.num[a]==0&&a>=0;)a--;return a+1},s.prototype.mod=function(a){if(this.getLength()-a.getLength()<0)return this;var b=new s(this.getLength()-a.getLength()+a.getLength()-1);for(var c=0;c<this.getLength();c++)b.num[c]=this.num[c];for(;b.getLength()-a.getLength()>=0;){for(var d=u.getRSFactorTable(256),e=0;e<a.getLength();e++)b.num[e+b.getLength()-a.getLength()]^=a.num[e];for(e=b.getLength()-a.getLength();e>=0;e--)if(b.num[e])break}return b};
+  m.getRSBlocks=function(a,b){var c=function(a,b){return new m(a,b)};return[{totalCount:26,dataCount:19},{totalCount:44,dataCount:34},{totalCount:70,dataCount:55},{totalCount:100,dataCount:80},{totalCount:134,dataCount:108},{totalCount:172,dataCount:136},{totalCount:196,dataCount:154},{totalCount:242,dataCount:192},{totalCount:292,dataCount:230},{totalCount:346,dataCount:271},{totalCount:404,dataCount:321},{totalCount:466,dataCount:365},{totalCount:532,dataCount:432},{totalCount:581,dataCount:474},{totalCount:655,dataCount:513},{totalCount:733,dataCount:604},{totalCount:815,dataCount:691},{totalCount:901,dataCount:779},{totalCount:991,dataCount:857},{totalCount:1085,dataCount:949},{totalCount:1156,dataCount:1024},{totalCount:1258,dataCount:1111},{totalCount:1364,dataCount:1225},{totalCount:1474,dataCount:1341},{totalCount:1588,dataCount:1458},{totalCount:1706,dataCount:1576},{totalCount:1828,dataCount:1704},{totalCount:1921,dataCount:1787},{totalCount:2051,dataCount:1911},{totalCount:2185,dataCount:2045},{totalCount:2323,dataCount:2181},{totalCount:2465,dataCount:2325},{totalCount:2611,dataCount:2461},{totalCount:2761,dataCount:2609},{totalCount:2876,dataCount:2725},{totalCount:3034,dataCount:2872},{totalCount:3196,dataCount:3024},{totalCount:3362,dataCount:3180},{totalCount:3532,dataCount:3340},{totalCount:3706,dataCount:3506}][Math.min(Math.max(a-1,0),39)]};
+  function drawQR(url, canvasId){
+    var q=new d(0,c.ErrorCorrectLevel.M); q.addData(url); q.make();
+    var canvas=document.getElementById(canvasId), ctx=canvas.getContext("2d");
+    var size=canvas.width, mc=q.getModuleCount();
+    var tile=Math.floor(size/mc), offset=Math.floor((size-tile*mc)/2);
+    ctx.fillStyle="#fff"; ctx.fillRect(0,0,size,size);
+    ctx.fillStyle="#000";
+    for(var r=0;r<mc;r++) for(var col=0;col<mc;col++)
+      if(q.isDark(r,col)) ctx.fillRect(offset+col*tile, offset+r*tile, tile, tile);
+  }
+  </script>
+
+  <script>
+    // Build absolute URLs that match Pages path (username.github.io/repo/)
+    const {protocol, host, pathname} = window.location;
+    const base = `${protocol}//${host}${pathname.replace(/qr\.html.*$/,'')}`;
+    const audioURL = `${base}assets/the-confident-mind-audio.mp3`;
+    const videoURL = `${base}assets/the-confident-mind-video.mp4`;
+
+    // Draw codes
+    drawQR(audioURL, "qr-audio");
+    drawQR(videoURL, "qr-video");
+
+    // Labels
+    document.getElementById("url-audio").textContent = audioURL;
+    document.getElementById("url-video").textContent = videoURL;
+
+    // Download buttons: turn canvas into PNG
+    function linkCanvas(linkId, canvasId){
+      const link=document.getElementById(linkId);
+      const canvas=document.getElementById(canvasId);
+      link.addEventListener("click", function(e){
+        link.href=canvas.toDataURL("image/png");
+      });
+    }
+    linkCanvas("dl-audio","qr-audio");
+    linkCanvas("dl-video","qr-video");
+
+    // Test buttons
+    document.getElementById("test-audio").onclick=()=>window.open(audioURL,"_blank");
+    document.getElementById("test-video").onclick=()=>window.open(videoURL,"_blank");
+  </script>
+</body>
+</html>
+
