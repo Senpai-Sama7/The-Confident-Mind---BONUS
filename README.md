@@ -52,6 +52,7 @@ Or generate via the **QR page** above.
 
 ## 🔧 Repo Structure
 
+```
 The-Confident-Mind---BONUS/
 ├─ index.html # landing page (cover only)
 ├─ qr.html # QR render + download
@@ -62,7 +63,7 @@ The-Confident-Mind---BONUS/
 ├─ the-confident-mind-video.mp4
 ├─ the-confident-mind-audio-qr.png # QR PNGs for KDP
 └─ the-confident-mind-video-qr.png
-
+```
 
 ---
 
