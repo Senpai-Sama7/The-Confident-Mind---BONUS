@@ -52,3 +52,33 @@ Or generate via the **QR page** above.
 
 ## 🔧 Repo Structure
 
+The-Confident-Mind---BONUS/
+├─ index.html # landing page (cover only)
+├─ qr.html # QR render + download
+└─ assets/
+├─ cover.jpg|cover.jpeg
+├─ the-confident-mind-audio.m4a # primary audio
+├─ the-confident-mind-audio.mp3 # optional MP3 mirror (for legacy QR)
+├─ the-confident-mind-video.mp4
+├─ the-confident-mind-audio-qr.png # QR PNGs for KDP
+└─ the-confident-mind-video-qr.png
+
+
+---
+
+## ✅ Publishing Notes
+
+- Repo must be **public**.  
+- **Settings → Pages → Deploy from branch →** `main` **/** root.  
+- Do **not** use Git LFS for media; Pages won’t serve LFS pointers.  
+- Keep each file **≤ 100 MB**.
+
+---
+
+## ❓Troubleshooting
+
+- **404 on media:** filename or path mismatch. Match the printed QR URL exactly.
+- **QR opens but won’t download on iOS:** provide an `.mp3` mirror and/or a `.zip`.
+- **Cover not visible:** `cover.jpg` vs `cover.jpeg` case/extension mismatch.
+
+---
