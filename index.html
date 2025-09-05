@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>The Confident Mind – Reader Bonus</title>
+  <title>The Confident Mind — Reader Bonus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Reader bonus for The Confident Mind. Scan the QR code in the book to access audio and video.">
   <meta name="color-scheme" content="light dark">
@@ -12,18 +12,51 @@
     *{box-sizing:border-box}
     html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
     .wrap{min-height:100dvh;display:grid;place-items:center;padding:20px}
-    .card{max-width:min(92vw,800px);width:100%}
+    .card{max-width:min(92vw,800px);width:100%;text-align:center}
     .cover{width:100%;height:auto;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    .meta{margin-top:12px;color:var(--muted);text-align:center;font-size:14px}
+    .meta{margin-top:12px;color:var(--muted);font-size:14px}
+    .err{margin-top:10px;font-size:13px;color:#ffb4b4}
   </style>
 </head>
 <body>
   <main class="wrap">
     <div class="card">
-      <img class="cover" src="assets/cover.jpg" alt="The Confident Mind — Book Cover">
+      <img id="cover" class="cover" alt="The Confident Mind — Book Cover">
       <p class="meta">To access your bonus audio and video, scan the QR code printed inside the book.</p>
+      <div id="err" class="err" hidden>Cover image not found at <code>/assets/cover.jpg</code>. Check filename, extension, or Git LFS.</div>
     </div>
   </main>
+
+  <script>
+    // Try common filenames and extensions, case-sensitive
+    const candidates = [
+      "assets/cover.jpg",
+      "assets/cover.jpeg",
+      "assets/cover.png",
+      "assets/Cover.jpg",
+      "assets/Cover.jpeg",
+      "assets/Cover.png"
+    ];
+    async function tryLoad(seq){
+      for(const path of seq){
+        try{
+          const r = await fetch(path, {method:"HEAD", cache:"no-store"});
+          if(r.ok){ document.getElementById("cover").src = path; return; }
+        }catch(_){}
+      }
+      document.getElementById("err").hidden = false;
+      // Fallback solid placeholder so layout isn’t blank
+      const ph = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='1600'>
+           <rect width='100%' height='100%' fill='${matchMedia('(prefers-color-scheme: dark)').matches ? '#16161a' : '#e9ecef'}'/>
+           <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#888' font-family='system-ui' font-size='42'>
+             Cover not found
+           </text>
+         </svg>`);
+      document.getElementById("cover").src = ph;
+    }
+    tryLoad(candidates);
+  </script>
 </body>
 </html>
 
