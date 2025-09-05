@@ -1,4 +1,8 @@
-# The Confident Mind — Reader Bonus
+<p align="center">
+  <img src="assets/cover.jpeg" alt="The Confident Mind" width="300"/>
+</p>
+
+# The Confident Mind by Douglas Mitchell— Reader Bonus
 
 Landing page and QR codes for the bonus audio/video included with **The Confident Mind**.
 
