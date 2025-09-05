@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/cover.jpeg" alt="The Confident Mind" width="300"/>
+  <img src="assets/cover.jpg" alt="The Confident Mind" width="300"/>
 </p>
 
 # The Confident Mind by Douglas Mitchell— Reader Bonus
