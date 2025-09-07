@@ -111,11 +111,11 @@
 
     .cover {
       width: 100%;
-      height: auto; /* Let image height scale automatically */
+      aspect-ratio: 1200 / 1600; /* Re-instated to create a stable container */
       border-radius: 14px;
       display: block;
       background-color: #0e1116;
-      /* aspect-ratio and object-fit removed to allow for a perfect fit based on the image's own dimensions */
+      object-fit: contain; /* Ensures the entire image fits within the container without being cropped */
     }
 
     .note {
@@ -650,7 +650,7 @@
           const startNeuron = neurons[Math.floor(Math.random() * neurons.length)];
           if (startNeuron && startNeuron.connections.length > 0) {
             const endNeuron = startNeuron.connections[Math.floor(Math.random() * startNeuron.connections.length)];
-            particles.push(new Particle(startNeuron.x, startNeuron.y, endNeuron.x, endNeuron.y));
+            particles.push(new Particle(startNeuron.x, startY, endNeuron.x, endNeuron.y));
           }
         }
         
@@ -691,6 +691,4 @@
   </script>
 </body>
 </html>
-
-
 
