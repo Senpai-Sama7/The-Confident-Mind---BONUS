@@ -652,7 +652,8 @@
           const startNeuron = neurons[Math.floor(Math.random() * neurons.length)];
           if (startNeuron && startNeuron.connections.length > 0) {
             const endNeuron = startNeuron.connections[Math.floor(Math.random() * startNeuron.connections.length)];
-            particles.push(new Particle(startNeuron.x, startY, endNeuron.x, endNeuron.y));
+            // ***FIXED: Was passing an undefined variable 'startY' which broke the script.***
+            particles.push(new Particle(startNeuron.x, startNeuron.y, endNeuron.x, endNeuron.y));
           }
         }
         
@@ -693,5 +694,4 @@
   </script>
 </body>
 </html>
-
 
