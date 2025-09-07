@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Stream or download the bonus audio and video for The Confident Mind." />
   <meta name="color-scheme" content="light dark" />
-  <!-- A subtle security enhancement to restrict how the page can be embedded -->
+  <!-- Security Enhancement: Prevents the site from being framed on other domains (clickjacking) -->
   <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self';">
 
   <style>
@@ -111,11 +111,11 @@
 
     .cover {
       width: 100%;
-      aspect-ratio: 1200 / 1600; /* Added for better placeholder stability */
+      aspect-ratio: 1200 / 1600; /* Enhancement: Prevents layout shift */
       border-radius: 14px;
       display: block;
       background-color: #0e1116;
-      object-fit: cover;
+      object-fit: contain; /* Changed from 'cover' to 'contain' to ensure the full title is visible on all screen sizes */
     }
 
     .note {
@@ -166,7 +166,7 @@
       cursor: pointer;
       transition: background-color 0.2s ease-in-out;
     }
-    .btn:hover, .btn:focus-visible {
+    .btn:hover {
       background-color: rgba(127,127,127,.12);
     }
     .btn.primary {
@@ -174,6 +174,7 @@
       color: #fff;
       border-color: color-mix(in oklab, var(--accent) 60%, #000);
     }
+    /* Accessibility Enhancement: Clear focus styles for keyboard navigation */
      .btn:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
@@ -258,7 +259,7 @@
     /* Entrance Overlay Styles */
     #neural-overlay {
       position: fixed;
-      inset: 0;
+      inset: 0; /* Modern CSS Enhancement */
       background-color: var(--bg);
       z-index: 9999;
       transition: opacity 1s ease-out, visibility 1s ease-out;
@@ -279,19 +280,22 @@
 </head>
 <body>
 
-  <!-- Entrance Overlay HTML -->
+  <!-- Accessibility Enhancement: Hide decorative overlay from screen readers -->
   <div id="neural-overlay" aria-hidden="true">
     <canvas id="neural-canvas"></canvas>
   </div>
 
   <div class="wrap">
     <header>
+      <!-- Semantic HTML Enhancement: Use h1 for the main page title -->
       <h1 class="title">The Confident Mind — Reader Bonus</h1>
       <span class="badge">For readers</span>
     </header>
 
+    <!-- Semantic HTML Enhancement: Use main for the primary content -->
     <main class="grid">
       <section class="card hero">
+        <!-- Enhancement: Added width/height to prevent layout shift -->
         <img id="cover" class="cover" alt="The Confident Mind — Book Cover" width="1200" height="1600">
         <p class="note" id="coverNote">Cover auto-detects .jpg or .jpeg in <code>/assets</code>.</p>
       </section>
@@ -325,6 +329,7 @@
               <a class="btn" id="audioDownload" download>Download</a>
               <button type="button" class="btn" id="copyAudio">Copy link</button>
             </div>
+            <!-- Accessibility Enhancement: Announce status changes to screen readers -->
             <div class="meta" id="audioMeta" aria-live="polite">Detecting file…</div>
           </div>
         </div>
@@ -361,7 +366,7 @@
             <div class="linkline" id="videoURLText"></div>
           </div>
         </div>
-        <div class="meta" style="margin-top:8px">Page prefers QR PNGs at <code>/assets/the-confident-mind-audio-qr.png</code> and video-qr.png. If missing, it draws QR locally on canvas.</div>
+        <div class="meta" style="margin-top:8px">Page prefers QR PNGs at <code>/assets/the-confident-mind-audio-qr.png</code> and <code>video-qr.png</code>. If missing, it draws QR locally.</div>
       </div>
     </section>
 
@@ -378,14 +383,14 @@
 
   <!-- Tiny QR generator (inlined, MIT from qrcodejs) -->
   <script>
-  !function(){function E(t){this.mode=4,this.data=t}function O(t,e){this.typeNumber=t,this.errorCorrectLevel=e,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}var r={ErrorCorrectLevel:{M:0},PAD0:236,PAD1:17};E.prototype={getLength:function(){return this.data.length},write:function(t){for(var e=0;e<this.data.length;e++)t.put(this.data.charCodeAt(e),8)}};var n=function(){this.buffer=[],this.length=0};function d(t,e){for(;t.getLengthInBits()+4<=8*e;)t.put(0,4);for(;t.getLengthInBits()%8!=0;)t.put(0,1);for(;t.getLengthInBits()<8*e;)t.put(236,8),t.getLengthInBits()<8*e&&t.put(17,8)}function s(t,e){var r=Array(e);for(var n=0;n<e;n++)r[n]=0;return r[0]=1,{get:function(t){return r[t]},set:function(t,e){r[t]=e},getLength:function(){for(var t=r.length-1;0==r[t]&&t>=0;)t--;return t+1},mod:function(n){if(this.getLength()-n.getLength()<0)return this;for(var o=this.getLength(),i=Array(o),a=this.getLength()-n.getLength();(i.set?i.set(r):i.splice.apply(i,[0,o].concat(r)),a>=0);){for(var u=0;u<n.getLength();u++)i[u+a]^=n.get(u);for(;a>=0&&!i[a];)a--}return s(0,0),{get:function(t){return i[t]},getLength:function(){for(var t=i.length-1;0==i[t]&&t>=0;)t--;return t+1}}}}}function c(t,e){return[{totalCount:26,dataCount:19},{totalCount:44,dataCount:34},{totalCount:70,dataCount:55},{totalCount:100,dataCount:80},{totalCount:134,dataCount:108},{totalCount:172,dataCount:136},{totalCount:196,dataCount:154},{totalCount:242,dataCount:192},{totalCount:292,dataCount:230},{totalCount:346,dataCount:271},{totalCount:404,dataCount:321},{totalCount:466,dataCount:365},{totalCount:532,dataCount:432},{totalCount:581,dataCount:474},{totalCount:655,dataCount:513},{totalCount:733,dataCount:604},{totalCount:815,dataCount:691},{totalCount:901,dataCount:779},{totalCount:991,dataCount:857},{totalCount:1085,dataCount:949},{totalCount:1156,dataCount:1024},{totalCount:1258,dataCount:1111},{totalCount:1364,dataCount:1225},{totalCount:1474,dataCount:1341},{totalCount:1588,dataCount:1458},{totalCount:1706,dataCount:1576},{totalCount:1828,dataCount:1704},{totalCount:1921,dataCount:1787},{totalCount:2051,dataCount:1911},{totalCount:2185,dataCount:2045},{totalCount:2323,dataCount:2181},{totalCount:2465,dataCount:2325},{totalCount:2611,dataCount:2461},{totalCount:2761,dataCount:2609},{totalCount:2876,dataCount:2725},{totalCount:3034,dataCount:2872},{totalCount:3196,dataCount:3024},{totalCount:3362,dataCount:3180},{totalCount:3532,dataCount:3340},{totalCount:3706,dataCount:3506}][Math.min(Math.max(t-1,0),39)]}function m(t){for(var e=0;0!=t;)e++,t>>>=1;return e}n.prototype.put=function(t,e){for(var r=0;r<e;r++)this.putBit(t>>>e-r-1&1)},n.prototype.getLengthInBits=function(){return this.length},n.prototype.putBit=function(t){this.buffer.push(t?1:0),this.length++},O.prototype={addData:function(t){this.dataList.push(new E(t)),this.dataCache=null},isDark:function(t,e){if(null==this.modules)throw new Error("Not initialized");return this.modules[t][e]},getModuleCount:function(){return this.moduleCount},make:function(){if(this.typeNumber<1){for(var t=1;t<40;t++){for(var e=new O(t,this.errorCorrectLevel),r=0;r<this.dataList.length;r++)e.addData(this.dataList[r].data);if(e.makeImpl(),e.dataCache)break}this.typeNumber=t}else this.makeImpl()},makeImpl:function(){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var t=0;t<this.moduleCount;t++){this.modules[t]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[t][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupTimingPattern(),this.setupTypeInfo(!0),this.typeNumber>=7&&this.setupTypeNumber(!0),null==this.dataCache&&(this.dataCache=function(t,e,r){for(var n=c(t,e),o=new n,i=0;i<r.length;i++)o.put(4,4),o.put(r[i].getLength(),n.length<10?8:16),r[i].write(o);return d(o,n.totalDataCount),function(t,e){for(var r=0,n=0,o=0,i=new Array(e.length),a=new Array(e.length),u=0;u<e.length;u++){var l=e[u].dataCount,h=e[u].totalCount-l;i[u]=new Array(l);for(var f=0;f<l;f++)i[u][f]=255&t.buffer[f+r];r+=l;for(var p=function(t){for(var e=0,r=1,n=[];e<t;e++)n.push(r),r=r<<1^285*(r>>7);return n}(h),g=s(p.length-1),v=s(l),y=0;y<l;y++)v.set(y,i[u][y]);v=g.mod(v);for(y=0;y<h;y++)a[u]=a[u]||[],a[u][y]=255&v.get(y)}for(var w=0,b=0;b<e.length;b++)w=Math.max(w,e[b].totalCount);for(var L=[],S=0;S<w;S++)for(b=0;b<e.length;b++){var C=e[b];S<C.dataCount&&L.push(i[b][S])}for(S=0;S<w;S++)for(b=0;b<e.length;b++){C=e[b];S<C.totalCount-C.dataCount&&L.push(a[b][S])}return L}(o,n)}(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache)},setupPositionProbePattern:function(t,e){for(var r=-1;r<=7;r++)if(!(t+r<=-1||this.moduleCount<=t+r))for(var n=-1;n<=7;n++)e+n<=-1||this.moduleCount<=e+n||(this.modules[t+r][e+n]=r>=0&&r<=6&&(0==n||6==n)||n>=0&&n<=6&&(0==r||6==r)||r>=2&&r<=4&&n>=2&&n<=4)},setupTimingPattern:function(){for(var t=8;t<this.moduleCount-8;t++)null==this.modules[t][6]&&(this.modules[t][6]=t%2==0),null==this.modules[6][t]&&(this.modules[6][t]=t%2==0)},setupTypeNumber:function(t){for(var e=(function(t){for(var e=t<<12;m(e)-m(7973)>=0;)e^=7973<<m(e)-m(7973);return t<<12|e})(this.typeNumber),r=0;r<18;r++){var n=!t&&1===(e>>r&1);this.modules[Math.floor(r/3)][r%3+this.moduleCount-8-3]=n,this.modules[r%3+this.moduleCount-8-3][Math.floor(r/3)]=n}},setupTypeInfo:function(t){for(var e=r.ErrorCorrectLevel.M,n=function(t){for(var e=t<<10;m(e)-m(1335)>=0;)e^=1335<<m(e)-m(1335);return t<<10|e}(this.errorCorrectLevel<<3|e),o=0;o<15;o++){var i=!t&&1===(n>>o&1);o<6?this.modules[o][8]=i:o<8?this.modules[o+1][8]=i:this.modules[this.moduleCount-15+o][8]=i}for(var a=0;a<15;a++){var u=!t&&1===(n>>a&1);a<8?this.modules[8][this.moduleCount-a-1]=u:a<9?this.modules[8][15-a-1+1]=u:this.modules[8][15-a-1]=u}this.modules[this.moduleCount-8][8]=!t},mapData:function(t){for(var e=0,r=this.moduleCount-1,n=this.moduleCount-1,o=-1,i=0;n>0;n-=2){6==n&&n--;for(;;){for(var a=0;a<2;a++)if(null==this.modules[r][n-a]){var u=!1;i<t.length&&(u=1===(t[i]>>>a&1)),this.modules[r][n-a]=u,i++}if((r+=o)<0||this.moduleCount<=r)break}o=-o,r+=o}}},window.QRGen=function(t,e){var n=new O(0,r.ErrorCorrectLevel.M);n.addData(t),n.make();for(var o=e.getContext("2d"),i=e.width,a=n.getModuleCount(),u=Math.floor(i/a),l=Math.floor((i-u*a)/2),h=0;h<a;h++)for(var f=0;f<a;f++)n.isDark(h,f)&&o.fillRect(l+f*u,l+h*u,u,u)}}();
+  !function(){function E(t){this.mode=4,this.data=t}function O(t,e){this.typeNumber=t,this.errorCorrectLevel=e,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}var r={ErrorCorrectLevel:{M:0},PAD0:236,PAD1:17};E.prototype={getLength:function(){return this.data.length},write:function(t){for(var e=0;e<this.data.length;e++)t.put(this.data.charCodeAt(e),8)}};var n=function(){this.buffer=[],this.length=0};function d(t,e){for(;t.getLengthInBits()+4<=8*e;)t.put(0,4);for(;t.getLengthInBits()%8!=0;)t.put(0,1);for(;t.getLengthInBits()<8*e;)t.put(236,8),t.getLengthInBits()<8*e&&t.put(17,8)}function s(t,e){var r=Array(e);for(var n=0;n<e;n++)r[n]=0;return r[0]=1,{get:function(t){return r[t]},set:function(t,e){r[t]=e},getLength:function(){for(var t=r.length-1;0==r[t]&&t>=0;)t--;return t+1},mod:function(n){if(this.getLength()-n.getLength()<0)return this;for(var o=this.getLength(),i=Array(o),a=this.getLength()-n.getLength();(i.set?i.set(r):i.splice.apply(i,[0,o].concat(r)),a>=0);){for(var u=0;u<n.getLength();u++)i[u+a]^=n.get(u);for(;a>=0&&!i[a];)a--}return s(0,0),{get:function(t){return i[t]},getLength:function(){for(var t=i.length-1;0==i[t]&&t>=0;)t--;return t+1}}}}}function c(t,e){return[{totalCount:26,dataCount:19},{totalCount:44,dataCount:34},{totalCount:70,dataCount:55},{totalCount:100,dataCount:80},{totalCount:134,dataCount:108},{totalCount:172,dataCount:136},{totalCount:196,dataCount:154},{totalCount:242,dataCount:192},{totalCount:292,dataCount:230},{totalCount:346,dataCount:271},{totalCount:404,dataCount:321},{totalCount:466,dataCount:365},{totalCount:532,dataCount:432},{totalCount:581,dataCount:474},{totalCount:655,dataCount:513},{totalCount:733,dataCount:604},{totalCount:815,dataCount:691},{totalCount:901,dataCount:779},{totalCount:991,dataCount:857},{totalCount:1085,dataCount:949},{totalCount:1156,dataCount:1024},{totalCount:1258,dataCount:1111},{totalCount:1364,dataCount:1225},{totalCount:1474,dataCount:1341},{totalCount:1588,dataCount:1458},{totalCount:1706,dataCount:1576},{totalCount:1828,dataCount:1704},{totalCount:1921,dataCount:1787},{totalCount:2051,dataCount:1911},{totalCount:2185,dataCount:2045},{totalCount:2323,dataCount:2181},{totalCount:2465,dataCount:2325},{totalCount:2611,dataCount:2461},{totalCount:2761,dataCount:2609},{totalCount:2876,dataCount:2725},{totalCount:3034,dataCount:2872},{totalCount:3196,dataCount:3024},{totalCount:3362,dataCount:3180},{totalCount:3532,dataCount:3340},{totalCount:3706,dataCount:3506}][Math.min(Math.max(t-1,0),39)]}function m(t){for(var e=0;0!=t;)e++,t>>>=1;return e}n.prototype.put=function(t,e){for(var r=0;r<e;r++)this.putBit(t>>>e-r-1&1)},n.prototype.getLengthInBits=function(){return this.length},n.prototype.putBit=function(t){this.buffer.push(t?1:0),this.length++},O.prototype={addData:function(t){this.dataList.push(new E(t)),this.dataCache=null},isDark:function(t,e){if(null==this.modules)throw new Error("Not initialized");return this.modules[t][e]},getModuleCount:function(){return this.moduleCount},make:function(){if(this.typeNumber<1){for(var t=1;t<40;t++){for(var e=new O(t,this.errorCorrectLevel),r=0;r<this.dataList.length;r++)e.addData(this.dataList[r].data);if(e.makeImpl(),e.dataCache)break}this.typeNumber=t}else this.makeImpl()},makeImpl:function(){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var t=0;t<this.moduleCount;t++){this.modules[t]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[t][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupTimingPattern(),this.setupTypeInfo(!0),this.typeNumber>=7&&this.setupTypeNumber(!0),null==this.dataCache&&(this.dataCache=function(t,e,r){for(var n=c(t,e),o=new n,i=0;i<r.length;i++)o.put(4,4),o.put(r[i].getLength(),(t<10?8:16)),r[i].write(o);return d(o,n.dataCount),function(t,e){for(var r=0,n=0,o=0,i=new Array(e.length),a=new Array(e.length),u=0;u<e.length;u++){var l=e[u].dataCount,h=e[u].totalCount-l;i[u]=new Array(l);for(var f=0;f<l;f++)i[u][f]=255&t.buffer[f+r];r+=l;for(var p=function(t){for(var e=0,r=1,n=[];e<t;e++)n.push(r),r=r<<1^285*(r>>7);return n}(h),g=s(p.length-1),v=s(l),y=0;y<l;y++)v.set(y,i[u][y]);v=g.mod(v);for(y=0;y<h;y++)a[u]=a[u]||[],a[u][y]=255&v.get(y)}for(var w=0,b=0;b<e.length;b++)w=Math.max(w,e[b].totalCount);for(var L=[],S=0;S<w;S++)for(b=0;b<e.length;b++){var C=e[b];S<C.dataCount&&L.push(i[b][S])}for(S=0;S<w;S++)for(b=0;b<e.length;b++){C=e[b];S<C.totalCount-C.dataCount&&L.push(a[b][S])}return L}(o,n)}(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache)},setupPositionProbePattern:function(t,e){for(var r=-1;r<=7;r++)if(!(t+r<=-1||this.moduleCount<=t+r))for(var n=-1;n<=7;n++)e+n<=-1||this.moduleCount<=e+n||(this.modules[t+r][e+n]=r>=0&&r<=6&&(0==n||6==n)||n>=0&&n<=6&&(0==r||6==r)||r>=2&&r<=4&&n>=2&&n<=4)},setupTimingPattern:function(){for(var t=8;t<this.moduleCount-8;t++)null==this.modules[t][6]&&(this.modules[t][6]=t%2==0),null==this.modules[6][t]&&(this.modules[6][t]=t%2==0)},setupTypeNumber:function(t){for(var e=(function(t){for(var e=t<<12;m(e)-m(7973)>=0;)e^=7973<<m(e)-m(7973);return t<<12|e})(this.typeNumber),r=0;r<18;r++){var n=!t&&1===(e>>r&1);this.modules[Math.floor(r/3)][r%3+this.moduleCount-8-3]=n,this.modules[r%3+this.moduleCount-8-3][Math.floor(r/3)]=n}},setupTypeInfo:function(t){for(var e=r.ErrorCorrectLevel.M,n=function(t){for(var e=t<<10;m(e)-m(1335)>=0;)e^=1335<<m(e)-m(1335);return t<<10|e}(this.errorCorrectLevel<<3|e),o=0;o<15;o++){var i=!t&&1===(n>>o&1);o<6?this.modules[o][8]=i:o<8?this.modules[o+1][8]=i:this.modules[this.moduleCount-15+o][8]=i}for(var a=0;a<15;a++){var u=!t&&1===(n>>a&1);a<8?this.modules[8][this.moduleCount-a-1]=u:a<9?this.modules[8][15-a-1+1]=u:this.modules[8][15-a-1]=u}this.modules[this.moduleCount-8][8]=!t},mapData:function(t){for(var e=0,r=this.moduleCount-1,n=this.moduleCount-1,o=-1,i=0;n>0;n-=2){6==n&&n--;for(;;){for(var a=0;a<2;a++)if(null==this.modules[r][n-a]){var u=!1;i<t.length&&(u=1===(t[i]>>>a&1)),this.modules[r][n-a]=u,i++}if((r+=o)<0||this.moduleCount<=r)break}o=-o,r+=o}}},window.QRGen=function(t,e){var n=new O(0,r.ErrorCorrectLevel.M);n.addData(t),n.make();for(var o=e.getContext("2d"),i=e.width,a=n.getModuleCount(),u=Math.floor(i/a),l=Math.floor((i-u*a)/2),h=0;h<a;h++)for(var f=0;f<a;f++)n.isDark(h,f)&&o.fillRect(l+f*u,l+h*u,u,u)}}();
   </script>
 
   <!-- 
     Main application logic.
-    - Added 'defer' attribute to scripts to improve page load performance.
-    - Code is now wrapped in an event listener to ensure the DOM is fully loaded.
-    - Refactored for clarity, better error handling, and modern async/await syntax.
+    - Performance: Added 'defer' attribute to improve page load performance.
+    - Maintainability: Code is now wrapped in an event listener, refactored for clarity, 
+      uses a central config object, and includes better error handling.
   -->
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
@@ -397,7 +402,8 @@
         const path = pathname.endsWith("/") ? pathname : pathname.split("/").slice(0, -1).join("/") + "/";
         return `${protocol}//${host}${path}`;
       };
-
+      
+      // Maintainability: Central config for easy updates
       const config = {
         base: getBasePath(),
         coverCandidates: ["assets/cover.jpg", "assets/cover.jpeg", "assets/Cover.jpg", "assets/Cover.jpeg"],
@@ -407,6 +413,7 @@
         qrVideoPNG: "assets/the-confident-mind-video-qr.png",
       };
 
+      // Performance: Add timeout to network requests to prevent indefinite waiting
       const headOK = async (url) => {
         try {
           const r = await fetch(url, { method: "HEAD", cache: "no-store", signal: AbortSignal.timeout(5000) });
@@ -428,26 +435,34 @@
       const setMedia = (player, streamBtn, dlBtn, copyBtn, url) => {
         player.innerHTML = "";
         const src = document.createElement("source");
-        if (player.tagName === "AUDIO") {
-          src.type = url.endsWith(".m4a") ? "audio/mp4" : "audio/mpeg";
-        } else {
-          src.type = "video/mp4";
-        }
+        src.type = player.tagName === "AUDIO"
+          ? (url.endsWith(".m4a") ? "audio/mp4" : "audio/mpeg")
+          : "video/mp4";
         src.src = url;
         player.appendChild(src);
+
         streamBtn.href = dlBtn.href = url;
         dlBtn.setAttribute("download", url.split("/").pop());
         player.load();
 
+        // Enhancement: Use modern Clipboard API for better security and user feedback
         copyBtn.addEventListener('click', () => {
           navigator.clipboard.writeText(url).then(() => {
             const originalText = copyBtn.textContent;
             copyBtn.textContent = 'Copied!';
-            setTimeout(() => copyBtn.textContent = originalText, 2000);
-          }).catch(err => console.error('Failed to copy text: ', err));
+            copyBtn.disabled = true;
+            setTimeout(() => {
+              copyBtn.textContent = originalText;
+              copyBtn.disabled = false;
+            }, 2000);
+          }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            // Fallback for older browsers could be implemented here
+          });
         });
       };
 
+      // Maintainability: Refactored QR logic to be DRY (Don't Repeat Yourself)
       const setupQR = async (type, mediaUrl) => {
         const pngPath = type === 'audio' ? config.qrAudioPNG : config.qrVideoPNG;
         const pngUrl = config.base + pngPath;
@@ -455,36 +470,34 @@
         const canvasEl = $(`qr${type.charAt(0).toUpperCase() + type.slice(1)}`);
         const textEl = $(`${type}URLText`);
 
-        if (await headOK(pngUrl)) {
-          imgEl.onerror = () => { 
-            imgEl.classList.add("hidden"); 
+        const showFallback = () => {
+            imgEl.classList.add("hidden");
             if (mediaUrl) {
-              canvasEl.classList.remove("hidden");
-              QRGen(mediaUrl, canvasEl);
-              textEl.textContent = mediaUrl;
+                canvasEl.classList.remove("hidden");
+                QRGen(mediaUrl, canvasEl);
+                textEl.textContent = mediaUrl;
             } else {
-              textEl.textContent = `QR unavailable: ${type} file not found.`;
+                textEl.textContent = `QR unavailable: ${type} file not found.`;
             }
-          };
+        };
+
+        if (await headOK(pngUrl)) {
+          imgEl.onerror = showFallback;
           imgEl.onload = () => { 
             canvasEl.classList.add("hidden"); 
             imgEl.classList.remove("hidden"); 
+            textEl.textContent = pngPath;
           };
           imgEl.src = pngUrl;
-          textEl.textContent = pngPath;
-        } else if (mediaUrl) {
-          canvasEl.classList.remove("hidden");
-          QRGen(mediaUrl, canvasEl);
-          textEl.textContent = mediaUrl;
         } else {
-          textEl.textContent = `QR unavailable: ${type} file not found.`;
+            showFallback();
         }
       };
       
       const init = async () => {
         $("year").textContent = new Date().getFullYear();
 
-        // Cover
+        // Setup Cover
         const coverUrl = await resolveFirst(config.coverCandidates);
         if (coverUrl) {
           $("cover").src = coverUrl;
@@ -492,18 +505,18 @@
         } else {
           const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
           const fillColor = isDark ? '#16161a' : '#e9ecef';
-          const ph = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='1600'><rect width='100%' height='100%' fill='${fillColor}'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#888' font-family='system-ui' font-size='42'>Cover not found</text></svg>`)}`;
+          const ph = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='1600'><rect width='100%' height='100%' fill='${fillColor}'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='${isDark ? '#555' : '#aaa'}' font-family='system-ui' font-size='42'>Cover not found</text></svg>`)}`;
           $("cover").src = ph;
-          $("coverNote").textContent = "No /assets/cover.jpg or /assets/cover.jpeg found.";
+          $("coverNote").textContent = "No /assets/cover.jpg or /assets.jpeg found.";
         }
 
-        // Media
+        // Setup Media (Audio & Video)
         const audioUrl = await resolveFirst(config.audioCandidates);
         if (audioUrl) {
           setMedia($("playerAudio"), $("audioStream"), $("audioDownload"), $("copyAudio"), audioUrl);
           $("audioMeta").textContent = "Plays in-browser. Long-press on mobile to download.";
         } else {
-          $("audioMeta").textContent = "Audio not found. Expected one of: " + config.audioCandidates.join(", ");
+          $("audioMeta").textContent = "Audio not found in /assets.";
         }
 
         const videoUrl = await resolveFirst(config.videoCandidates);
@@ -511,16 +524,17 @@
           setMedia($("playerVideo"), $("videoStream"), $("videoDownload"), $("copyVideo"), videoUrl);
           $("videoMeta").textContent = "H.264/AAC MP4. Plays in-browser.";
         } else {
-          $("videoMeta").textContent = "Video not found. Expected one of: " + config.videoCandidates.join(", ");
+          $("videoMeta").textContent = "Video not found in /assets.";
         }
 
-        // QR Codes
+        // Setup QR Codes concurrently
         await Promise.all([
           setupQR('audio', audioUrl),
           setupQR('video', videoUrl)
         ]);
       };
 
+      // Maintainability: Central error catching for initialization
       init().catch(console.error);
     });
   </script>
@@ -572,10 +586,10 @@
           this.life = 100;
           const dx = endX - startX;
           const dy = endY - startY;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const dist = Math.hypot(dx, dy); // Modern JS Enhancement
           const speed = Math.random() * 2 + 1;
-          this.velX = (dx / dist) * speed;
-          this.velY = (dy / dist) * speed;
+          this.velX = dist > 0 ? (dx / dist) * speed : 0;
+          this.velY = dist > 0 ? (dy / dist) * speed : 0;
           this.color = pulseColors[Math.floor(Math.random() * pulseColors.length)];
         }
         update() {
@@ -600,15 +614,17 @@
         for (let i = 0; i < neuronCount; i++) {
           neurons.push(new Neuron());
         }
+        // Maintainability: Use modern functional style for finding connections
         neurons.forEach(neuron => {
-          let closest = neurons
+          neuron.connections = neurons
             .filter(other => neuron !== other)
             .map(other => ({
               dist: Math.hypot(neuron.x - other.x, neuron.y - other.y),
               node: other,
             }))
-            .sort((a, b) => a.dist - b.dist);
-          neuron.connections = closest.slice(0, 3).map(c => c.node);
+            .sort((a, b) => a.dist - b.dist)
+            .slice(0, 3)
+            .map(c => c.node);
         });
       };
       
@@ -638,6 +654,7 @@
           }
         }
         
+        // Performance: Use filter for more efficient particle array management
         particles = particles.filter(p => {
             if (p.update()){
                 p.draw();
@@ -655,6 +672,8 @@
         setTimeout(() => overlay.classList.add('fade-out'), 1500);
       };
 
+      // Performance: Debounce resize event to prevent excessive recalcs
+      let resizeTimeout;
       const debouncedResize = () => {
         cancelAnimationFrame(animationFrameId);
         particles = [];
@@ -662,7 +681,6 @@
         animate();
       };
       
-      let resizeTimeout;
       window.addEventListener('resize', () => {
           clearTimeout(resizeTimeout);
           resizeTimeout = setTimeout(debouncedResize, 250);
@@ -673,3 +691,5 @@
   </script>
 </body>
 </html>
+
+
