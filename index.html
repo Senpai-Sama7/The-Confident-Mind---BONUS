@@ -6,144 +6,371 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Stream or download the bonus audio and video for The Confident Mind." />
   <meta name="color-scheme" content="light dark" />
+  <!-- A subtle security enhancement to restrict how the page can be embedded -->
+  <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self';">
+
   <style>
-    :root{--bg:#0b0c10;--fg:#f6f7f9;--muted:#9aa3ad;--card:#14171c;--line:#252b32;--accent:#5aa9ff;--radius:18px;--shadow:0 12px 30px rgba(0,0,0,.35);--maxw:1100px}
-    @media (prefers-color-scheme: light){:root{--bg:#fff;--fg:#0e1116;--muted:#5a6572;--card:#f5f7fa;--line:#e7ecf1;--accent:#2563eb}}
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial}
-    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
-    .wrap{max-width:var(--maxw);margin:0 auto;padding:28px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
-    .title{font-weight:800;font-size:clamp(20px,3vw,28px)}
-    .badge{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid color-mix(in oklab,var(--accent) 40%,transparent);color:var(--accent);background:color-mix(in oklab,var(--accent) 12%,transparent)}
-    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
-    @media (max-width:980px){.grid{grid-template-columns:1fr}}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .hero{padding:14px}
-    .cover{width:100%;border-radius:14px;display:block;background:#0e1116;object-fit:cover}
-    .note{font-size:13px;color:var(--muted);margin:10px 4px 0}
-    .panel{padding:16px}
-    .section{border-top:1px solid var(--line);padding:16px}
-    .section:first-child{border-top:none}
-    .h2{margin:0 0 12px 0;font-size:18px;font-weight:700}
-    .meta{font-size:13px;color:var(--muted)}
-    .row{display:flex;flex-wrap:wrap;gap:10px}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);color:var(--fg);background:transparent;text-decoration:none;cursor:pointer}
-    .btn:hover{background:rgba(127,127,127,.12)}
-    .btn.primary{background:var(--accent);color:#fff;border-color:color-mix(in oklab,var(--accent) 60%,#000)}
-    .stack{display:flex;flex-direction:column;gap:10px}
-    .price-info{font-size:14px; margin-bottom: 8px;}
-    .qrgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width:620px){.qrgrid{grid-template-columns:1fr}}
-    .qrbox{display:grid;place-items:center;background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:12px}
-    .qrbox img, .qrbox canvas{background:#fff;border-radius:8px;max-width:100%;height:auto}
-    .linkline{font-size:12px;color:var(--muted);word-break:break-all;margin-top:6px;text-align:center}
-    footer{margin-top:22px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-    footer a{color:var(--muted);text-decoration:underline} footer a:hover{color:var(--fg)}
-    .hidden{display:none!important}
+    /* CSS Analysis & Enhancements:
+      - Organized CSS properties for better readability.
+      - Used modern CSS like clamp() for fluid typography and color-mix() for themes.
+      - Ensured responsive design with media queries for better mobile experience.
+      - Added focus-visible states for better accessibility on interactive elements.
+    */
+    :root {
+      --bg: #0b0c10;
+      --fg: #f6f7f9;
+      --muted: #9aa3ad;
+      --card: #14171c;
+      --line: #252b32;
+      --accent: #5aa9ff;
+      --radius: 18px;
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --maxw: 1100px;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #fff;
+        --fg: #0e1116;
+        --muted: #5a6572;
+        --card: #f5f7fa;
+        --line: #e7ecf1;
+        --accent: #2563eb;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--fg);
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .title {
+      font-weight: 800;
+      font-size: clamp(20px, 3vw, 28px);
+    }
+
+    .badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+      color: var(--accent);
+      background-color: color-mix(in oklab, var(--accent) 12%, transparent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+    }
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background-color: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 14px;
+    }
+
+    .cover {
+      width: 100%;
+      aspect-ratio: 1200 / 1600; /* Added for better placeholder stability */
+      border-radius: 14px;
+      display: block;
+      background-color: #0e1116;
+      object-fit: cover;
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 10px 4px 0;
+    }
+
+    .panel {
+      padding: 16px;
+    }
+
+    .section {
+      border-top: 1px solid var(--line);
+      padding: 16px;
+    }
+    .section:first-child {
+      border-top: none;
+    }
+
+    .h2 {
+      margin: 0 0 12px 0;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      color: var(--fg);
+      background-color: transparent;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+    .btn:hover, .btn:focus-visible {
+      background-color: rgba(127,127,127,.12);
+    }
+    .btn.primary {
+      background-color: var(--accent);
+      color: #fff;
+      border-color: color-mix(in oklab, var(--accent) 60%, #000);
+    }
+     .btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .price-info {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .price-info s {
+      color: var(--muted);
+    }
+
+    .qrgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 620px) {
+      .qrgrid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .qrbox {
+      display: grid;
+      place-items: center;
+      background-color: var(--card);
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+    }
+    .qrbox-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .qrbox img, .qrbox canvas {
+      background-color: #fff;
+      border-radius: 8px;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .linkline {
+      font-size: 12px;
+      color: var(--muted);
+      word-break: break-all;
+      margin-top: 6px;
+    }
+
+    footer {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: underline;
+    }
+    footer a:hover, footer a:focus-visible {
+      color: var(--fg);
+    }
+
+    .hidden {
+      display: none !important;
+    }
     
     /* Entrance Overlay Styles */
-    #neural-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;transition:opacity 1s ease-out, visibility 1s ease-out;opacity:1;visibility:visible}
-    #neural-overlay.fade-out{opacity:0;visibility:hidden;pointer-events:none}
-    #neural-canvas{display:block;width:100%;height:100%}
+    #neural-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: var(--bg);
+      z-index: 9999;
+      transition: opacity 1s ease-out, visibility 1s ease-out;
+      opacity: 1;
+      visibility: visible;
+    }
+    #neural-overlay.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    #neural-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </head>
 <body>
 
   <!-- Entrance Overlay HTML -->
-  <div id="neural-overlay">
+  <div id="neural-overlay" aria-hidden="true">
     <canvas id="neural-canvas"></canvas>
   </div>
 
   <div class="wrap">
     <header>
-      <div class="title">The Confident Mind — Reader Bonus</div>
+      <h1 class="title">The Confident Mind — Reader Bonus</h1>
       <span class="badge">For readers</span>
     </header>
 
-    <div class="grid">
+    <main class="grid">
       <section class="card hero">
-        <img id="cover" class="cover" alt="The Confident Mind — Book Cover">
+        <img id="cover" class="cover" alt="The Confident Mind — Book Cover" width="1200" height="1600">
         <p class="note" id="coverNote">Cover auto-detects .jpg or .jpeg in <code>/assets</code>.</p>
       </section>
 
       <section class="card panel">
         <div class="section">
-          <div class="h2">Purchase Your Copy</div>
-
-          <!-- eBook Option -->
+          <h2 class="h2">Purchase Your Copy</h2>
+          
           <div style="margin-bottom: 24px;">
             <div class="price-info">
-              <strong>eBook:</strong> $6.99 <s style="color:var(--muted);">$10.99</s> (35% off)
+              <strong>eBook:</strong> $6.99 <s>$10.99</s> (35% off)
             </div>
-            <a class="btn primary" href="https://buy.stripe.com/eVq00j15IfFO0js89Q4ko01" target="_blank" rel="noopener">Buy eBook Directly</a>
+            <!-- Security Enhancement: Added rel="noopener noreferrer" to prevent tabnabbing -->
+            <a class="btn primary" href="https://buy.stripe.com/eVq00j15IfFO0js89Q4ko01" target="_blank" rel="noopener noreferrer">Buy eBook Directly</a>
           </div>
 
-          <!-- Hardcover Option -->
-          <div style="margin-bottom: 24px;">
+          <div>
             <div class="price-info">
-              <strong>Hardcover:</strong> $12.99 <s style="color:var(--muted);">$19.99</s> (35% off)
+              <strong>Hardcover:</strong> $12.99 <s>$19.99</s> (35% off)
             </div>
-            <a class="btn primary" href="https://buy.stripe.com/14AfZheWy1OY7LU4XE4ko00" target="_blank" rel="noopener">Buy Hardcover Directly</a>
+            <a class="btn primary" href="https://buy.stripe.com/14AfZheWy1OY7LU4XE4ko00" target="_blank" rel="noopener noreferrer">Buy Hardcover Directly</a>
           </div>
         </div>
 
         <div class="section">
-          <div class="h2">Audio overview</div>
+          <h2 class="h2">Audio Overview</h2>
           <div class="stack">
             <audio id="playerAudio" controls preload="metadata" style="width:100%;border-radius:10px;"></audio>
             <div class="row">
-              <a class="btn primary" id="audioStream" target="_blank" rel="noopener">Stream</a>
+              <a class="btn primary" id="audioStream" target="_blank" rel="noopener noreferrer">Stream</a>
               <a class="btn" id="audioDownload" download>Download</a>
-              <button class="btn" id="copyAudio">Copy link</button>
+              <button type="button" class="btn" id="copyAudio">Copy link</button>
             </div>
-            <div class="meta" id="audioMeta">Detecting file…</div>
+            <div class="meta" id="audioMeta" aria-live="polite">Detecting file…</div>
           </div>
         </div>
 
         <div class="section">
-          <div class="h2">Video summary</div>
+          <h2 class="h2">Video Summary</h2>
           <div class="stack">
             <video id="playerVideo" controls preload="metadata" playsinline style="width:100%;border-radius:10px;"></video>
             <div class="row">
-              <a class="btn primary" id="videoStream" target="_blank" rel="noopener">Stream</a>
+              <a class="btn primary" id="videoStream" target="_blank" rel="noopener noreferrer">Stream</a>
               <a class="btn" id="videoDownload" download>Download</a>
-              <button class="btn" id="copyVideo">Copy link</button>
+              <button type="button" class="btn" id="copyVideo">Copy link</button>
             </div>
-            <div class="meta" id="videoMeta">Detecting file…</div>
+            <div class="meta" id="videoMeta" aria-live="polite">Detecting file…</div>
           </div>
         </div>
       </section>
-    </div>
+    </main>
 
     <section class="card" style="margin-top:18px">
       <div class="section">
-        <div class="h2">QR codes (always visible)</div>
+        <h2 class="h2">QR Codes</h2>
         <div class="qrgrid">
           <div class="qrbox">
-            <div style="font-weight:600;margin-bottom:6px;text-align:center">Audio</div>
-            <!-- Prefer PNG file if present -->
-            <img id="qrAudioImg" alt="Audio QR" class="hidden">
-            <canvas id="qrAudio" width="400" height="400" class="hidden" aria-label="Audio QR"></canvas>
+            <div class="qrbox-title">Audio</div>
+            <img id="qrAudioImg" alt="QR code for audio file" class="hidden">
+            <canvas id="qrAudio" width="400" height="400" class="hidden" aria-label="QR code for audio file"></canvas>
             <div class="linkline" id="audioURLText"></div>
           </div>
           <div class="qrbox">
-            <div style="font-weight:600;margin-bottom:6px;text-align:center">Video</div>
-            <img id="qrVideoImg" alt="Video QR" class="hidden">
-            <canvas id="qrVideo" width="400" height="400" class="hidden" aria-label="Video QR"></canvas>
+            <div class="qrbox-title">Video</div>
+            <img id="qrVideoImg" alt="QR code for video file" class="hidden">
+            <canvas id="qrVideo" width="400" height="400" class="hidden" aria-label="QR code for video file"></canvas>
             <div class="linkline" id="videoURLText"></div>
           </div>
         </div>
-        <div class="meta" style="margin-top:8px">Page prefers QR PNGs at <code>/assets/the-confident-mind-audio-qr.png</code> and <code>/assets/the-confident-mind-video-qr.png</code>. If missing, it draws QR locally on canvas.</div>
+        <div class="meta" style="margin-top:8px">Page prefers QR PNGs at <code>/assets/the-confident-mind-audio-qr.png</code> and video-qr.png. If missing, it draws QR locally on canvas.</div>
       </div>
     </section>
 
     <footer>
-      <div>© <span id="year"></span> The Confident Mind</div>
+      <div>&copy; <span id="year"></span> The Confident Mind</div>
       <div style="text-align:center;">
-        <a href="https://www.amazon.com/s?k=The+Confident+Mind+Douglas+Mitchell" target="_blank" rel="noopener">Amazon</a> &bull;
-        <a href="https://douglasmitchell.info" target="_blank" rel="noopener">douglasmitchell.info</a> &bull;
-        <a href="https://github.com/senpai-sama7" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.amazon.com/s?k=The+Confident+Mind+Douglas+Mitchell" target="_blank" rel="noopener noreferrer">Amazon</a> &bull;
+        <a href="https://douglasmitchell.info" target="_blank" rel="noopener noreferrer">douglasmitchell.info</a> &bull;
+        <a href="https://github.com/senpai-sama7" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
       <div style="text-align:right;">If a link fails, check file path.</div>
     </footer>
@@ -151,151 +378,175 @@
 
   <!-- Tiny QR generator (inlined, MIT from qrcodejs) -->
   <script>
-  !function(){function E(t){this.mode=4,this.data=t}function O(t,e){this.typeNumber=t,this.errorCorrectLevel=e,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}
-  var r={ErrorCorrectLevel:{M:0},PAD0:236,PAD1:17};
-  E.prototype={getLength:function(){return this.data.length},write:function(t){for(var e=0;e<this.data.length;e++)t.put(this.data.charCodeAt(e),8)}};
-  var n=function(){this.buffer=[],this.length=0};n.prototype.put=function(t,e){for(var r=0;r<e;r++)this.putBit(t>>>e-r-1&1)},n.prototype.getLengthInBits=function(){return this.length},n.prototype.putBit=function(t){this.buffer.push(t?1:0),this.length++};
-  function d(t,e){for(;t.getLengthInBits()+4<=8*e;)t.put(0,4);for(;t.getLengthInBits()%8!=0;)t.put(0,1);for(;t.getLengthInBits()<8*e;)t.put(236,8),t.getLengthInBits()<8*e&&t.put(17,8)}
-  function s(t,e){var r=Array(e);for(var n=0;n<e;n++)r[n]=0;return r[0]=1,{get:function(t){return r[t]},set:function(t,e){r[t]=e},getLength:function(){for(var t=r.length-1;0==r[t]&&t>=0;)t--;return t+1},mod:function(n){if(this.getLength()-n.getLength()<0)return this;for(var o=this.getLength(),i=Array(o);i.set?i.set(r):i.splice.apply(i,[0,o].concat(r)),a=this.getLength()-n.getLength();a>=0;){for(var u=0;u<n.getLength();u++)i[u+a]^=n.get(u);for(;a>=0&&!i[a];)a--}return s(0,0),{get:function(t){return i[t]},getLength:function(){for(var t=i.length-1;0==i[t]&&t>=0;)t--;return t+1}}}}
-  function c(t,e){return[{totalCount:26,dataCount:19},{totalCount:44,dataCount:34},{totalCount:70,dataCount:55},{totalCount:100,dataCount:80},{totalCount:134,dataCount:108},{totalCount:172,dataCount:136},{totalCount:196,dataCount:154},{totalCount:242,dataCount:192},{totalCount:292,dataCount:230},{totalCount:346,dataCount:271},{totalCount:404,dataCount:321},{totalCount:466,dataCount:365},{totalCount:532,dataCount:432},{totalCount:581,dataCount:474},{totalCount:655,dataCount:513},{totalCount:733,dataCount:604},{totalCount:815,dataCount:691},{totalCount:901,dataCount:779},{totalCount:991,dataCount:857},{totalCount:1085,dataCount:949},{totalCount:1156,dataCount:1024},{totalCount:1258,dataCount:1111},{totalCount:1364,dataCount:1225},{totalCount:1474,dataCount:1341},{totalCount:1588,dataCount:1458},{totalCount:1706,dataCount:1576},{totalCount:1828,dataCount:1704},{totalCount:1921,dataCount:1787},{totalCount:2051,dataCount:1911},{totalCount:2185,dataCount:2045},{totalCount:2323,dataCount:2181},{totalCount:2465,dataCount:2325},{totalCount:2611,dataCount:2461},{totalCount:2761,dataCount:2609},{totalCount:2876,dataCount:2725},{totalCount:3034,dataCount:2872},{totalCount:3196,dataCount:3024},{totalCount:3362,dataCount:3180},{totalCount:3532,dataCount:3340},{totalCount:3706,dataCount:3506}][Math.min(Math.max(t-1,0),39)]}
-  function m(t){for(var e=0;0!=t;)e++,t>>>=1;return e}
-  O.prototype={addData:function(t){this.dataList.push(new E(t)),this.dataCache=null},isDark:function(t,e){if(null==this.modules)throw new Error("Not initialized");return this.modules[t][e]},getModuleCount:function(){return this.moduleCount},make:function(){if(this.typeNumber<1){for(var t=1;t<40;t++){for(var e=new O(t,this.errorCorrectLevel),r=0;r<this.dataList.length;r++)e.addData(this.dataList[r].data);if(e.makeImpl(),e.dataCache)break}this.typeNumber=t}else this.makeImpl()},makeImpl:function(){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var t=0;t<this.moduleCount;t++){this.modules[t]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[t][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupTimingPattern(),this.setupTypeInfo(!0),this.typeNumber>=7&&this.setupTypeNumber(!0),null==this.dataCache&&(this.dataCache=function(t,e,r){for(var n=c(t,e),o=new n2=new n,i=0;i<r.length;i++)o.put(4,4),o.put(r[i].getLength(),n.length<10?8:16),r[i].write(o);d(o,n.totalDataCount);return function(t,e){for(var r=0,n=0,o=0,i=0,a=0,u=0,l=new Array(e.length),h=new Array(e.length),f=0;f<e.length;f++){var p=e[f].dataCount,g=e[f].totalCount-p;l[f]=new Array(p);for(var v=0;v<p;v++)l[f][v]=255&t.buffer[v+a];a+=p;for(var y=function(t){for(var e=0,r=1,n=[];e<t;e++)n.push(r),r=r<<1^285*(r>>7);return n}(g),w=s(y.length-1),b=s(p),v2=0;v2<p;v2++)b.set(v2,l[f][v2]);b=w.mod(b);for(v2=0;v2<g;v2++)h[f]=h[f]||[],h[f][v2]=255&b.get(v2)}for(var L=0,S=0;S<e.length;S++)L=Math.max(L,e[S].totalCount);for(var C=[],x=0;x<L;x++)for(S=0;S<e.length;S++){var D=e[S];x<D.dataCount&&C.push(l[S][x])}for(x=0;x<L;x++)for(S=0;S<e.length;S++){D=e[S];x<D.totalCount-D.dataCount&&C.push(h[S][x])}return C}(o,n)}(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache)},
-    setupPositionProbePattern:function(t,e){for(var r=-1;r<=7;r++)if(!(t+r<=-1||this.moduleCount<=t+r))for(var n=-1;n<=7;n++)e+n<=-1||this.moduleCount<=e+n||(this.modules[t+r][e+n]=r>=0&&r<=6&&(0==n||6==n)||n>=0&&n<=6&&(0==r||6==r)||r>=2&&r<=4&&n>=2&&n<=4)},
-    setupTimingPattern:function(){for(var t=8;t<this.moduleCount-8;t++)null==this.modules[t][6]&&(this.modules[t][6]=t%2==0),null==this.modules[6][t]&&(this.modules[6][t]=t%2==0)},
-    setupTypeNumber:function(t){for(var e=(function(t){for(var e=t<<12;m(e)-m(7973)>=0;)e^=7973<<m(e)-m(7973);return t<<12|e})(this.typeNumber),r=0;r<18;r++){var n=!t&&this.modules[Math.floor(r/3)][r%3+this.moduleCount-8-3];this.modules[Math.floor(r/3)][r%3+this.moduleCount-8-3]=n}},
-    setupTypeInfo:function(t){for(var e=r.ErrorCorrectLevel.M,n=function(t){for(var e=t<<10;m(e)-m(1335)>=0;)e^=1335<<m(e)-m(1335);return t<<10|e}(this.errorCorrectLevel<<3|e),o=0;o<15;o++){var i=!t&&this.modules[o<6?o:o<8?o+1:o+1][8];this.modules[o<6?o:o<8?o+1:o+1][8]=i}for(var a=0;a<15;a++){var u=!t&&this.modules[8][a<8?a:a+1];this.modules[8][a<8?a+1]=u}},
-    mapData:function(t){for(var e=0,r=this.moduleCount-1,n=this.moduleCount-1,o=-1,i=0;n>0;n-=2){6==n&&n--;for(;;){for(var a=0;a<2;a++)null==this.modules[r][n-a]&&(this.modules[r][n-a]=i<t.length?1==(t[i]>>>a&1):!1,i++);if((r+=o)<0||this.moduleCount<=r)break}o=-o,r+=o}}
-  }; window.QRGen=function(url, canvas){var q=new O(0,r.ErrorCorrectLevel.M); q.addData(url); q.make();
-    var c=canvas.getContext("2d"), size=canvas.width, mc=q.getModuleCount();
-    var tile=Math.floor(size/mc), offset=Math.floor((size-tile*mc)/2);
-    c.fillStyle="#fff"; c.fillRect(0,0,size,size); c.fillStyle="#000";
-    for(var row=0;row<mc;row++) for(var col=0;col<mc;col++) if(q.isDark(row,col))
-      c.fillRect(offset+col*tile, offset+row*tile, tile, tile);
-  }}();
+  !function(){function E(t){this.mode=4,this.data=t}function O(t,e){this.typeNumber=t,this.errorCorrectLevel=e,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}var r={ErrorCorrectLevel:{M:0},PAD0:236,PAD1:17};E.prototype={getLength:function(){return this.data.length},write:function(t){for(var e=0;e<this.data.length;e++)t.put(this.data.charCodeAt(e),8)}};var n=function(){this.buffer=[],this.length=0};function d(t,e){for(;t.getLengthInBits()+4<=8*e;)t.put(0,4);for(;t.getLengthInBits()%8!=0;)t.put(0,1);for(;t.getLengthInBits()<8*e;)t.put(236,8),t.getLengthInBits()<8*e&&t.put(17,8)}function s(t,e){var r=Array(e);for(var n=0;n<e;n++)r[n]=0;return r[0]=1,{get:function(t){return r[t]},set:function(t,e){r[t]=e},getLength:function(){for(var t=r.length-1;0==r[t]&&t>=0;)t--;return t+1},mod:function(n){if(this.getLength()-n.getLength()<0)return this;for(var o=this.getLength(),i=Array(o),a=this.getLength()-n.getLength();(i.set?i.set(r):i.splice.apply(i,[0,o].concat(r)),a>=0);){for(var u=0;u<n.getLength();u++)i[u+a]^=n.get(u);for(;a>=0&&!i[a];)a--}return s(0,0),{get:function(t){return i[t]},getLength:function(){for(var t=i.length-1;0==i[t]&&t>=0;)t--;return t+1}}}}}function c(t,e){return[{totalCount:26,dataCount:19},{totalCount:44,dataCount:34},{totalCount:70,dataCount:55},{totalCount:100,dataCount:80},{totalCount:134,dataCount:108},{totalCount:172,dataCount:136},{totalCount:196,dataCount:154},{totalCount:242,dataCount:192},{totalCount:292,dataCount:230},{totalCount:346,dataCount:271},{totalCount:404,dataCount:321},{totalCount:466,dataCount:365},{totalCount:532,dataCount:432},{totalCount:581,dataCount:474},{totalCount:655,dataCount:513},{totalCount:733,dataCount:604},{totalCount:815,dataCount:691},{totalCount:901,dataCount:779},{totalCount:991,dataCount:857},{totalCount:1085,dataCount:949},{totalCount:1156,dataCount:1024},{totalCount:1258,dataCount:1111},{totalCount:1364,dataCount:1225},{totalCount:1474,dataCount:1341},{totalCount:1588,dataCount:1458},{totalCount:1706,dataCount:1576},{totalCount:1828,dataCount:1704},{totalCount:1921,dataCount:1787},{totalCount:2051,dataCount:1911},{totalCount:2185,dataCount:2045},{totalCount:2323,dataCount:2181},{totalCount:2465,dataCount:2325},{totalCount:2611,dataCount:2461},{totalCount:2761,dataCount:2609},{totalCount:2876,dataCount:2725},{totalCount:3034,dataCount:2872},{totalCount:3196,dataCount:3024},{totalCount:3362,dataCount:3180},{totalCount:3532,dataCount:3340},{totalCount:3706,dataCount:3506}][Math.min(Math.max(t-1,0),39)]}function m(t){for(var e=0;0!=t;)e++,t>>>=1;return e}n.prototype.put=function(t,e){for(var r=0;r<e;r++)this.putBit(t>>>e-r-1&1)},n.prototype.getLengthInBits=function(){return this.length},n.prototype.putBit=function(t){this.buffer.push(t?1:0),this.length++},O.prototype={addData:function(t){this.dataList.push(new E(t)),this.dataCache=null},isDark:function(t,e){if(null==this.modules)throw new Error("Not initialized");return this.modules[t][e]},getModuleCount:function(){return this.moduleCount},make:function(){if(this.typeNumber<1){for(var t=1;t<40;t++){for(var e=new O(t,this.errorCorrectLevel),r=0;r<this.dataList.length;r++)e.addData(this.dataList[r].data);if(e.makeImpl(),e.dataCache)break}this.typeNumber=t}else this.makeImpl()},makeImpl:function(){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var t=0;t<this.moduleCount;t++){this.modules[t]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[t][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupTimingPattern(),this.setupTypeInfo(!0),this.typeNumber>=7&&this.setupTypeNumber(!0),null==this.dataCache&&(this.dataCache=function(t,e,r){for(var n=c(t,e),o=new n,i=0;i<r.length;i++)o.put(4,4),o.put(r[i].getLength(),n.length<10?8:16),r[i].write(o);return d(o,n.totalDataCount),function(t,e){for(var r=0,n=0,o=0,i=new Array(e.length),a=new Array(e.length),u=0;u<e.length;u++){var l=e[u].dataCount,h=e[u].totalCount-l;i[u]=new Array(l);for(var f=0;f<l;f++)i[u][f]=255&t.buffer[f+r];r+=l;for(var p=function(t){for(var e=0,r=1,n=[];e<t;e++)n.push(r),r=r<<1^285*(r>>7);return n}(h),g=s(p.length-1),v=s(l),y=0;y<l;y++)v.set(y,i[u][y]);v=g.mod(v);for(y=0;y<h;y++)a[u]=a[u]||[],a[u][y]=255&v.get(y)}for(var w=0,b=0;b<e.length;b++)w=Math.max(w,e[b].totalCount);for(var L=[],S=0;S<w;S++)for(b=0;b<e.length;b++){var C=e[b];S<C.dataCount&&L.push(i[b][S])}for(S=0;S<w;S++)for(b=0;b<e.length;b++){C=e[b];S<C.totalCount-C.dataCount&&L.push(a[b][S])}return L}(o,n)}(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache)},setupPositionProbePattern:function(t,e){for(var r=-1;r<=7;r++)if(!(t+r<=-1||this.moduleCount<=t+r))for(var n=-1;n<=7;n++)e+n<=-1||this.moduleCount<=e+n||(this.modules[t+r][e+n]=r>=0&&r<=6&&(0==n||6==n)||n>=0&&n<=6&&(0==r||6==r)||r>=2&&r<=4&&n>=2&&n<=4)},setupTimingPattern:function(){for(var t=8;t<this.moduleCount-8;t++)null==this.modules[t][6]&&(this.modules[t][6]=t%2==0),null==this.modules[6][t]&&(this.modules[6][t]=t%2==0)},setupTypeNumber:function(t){for(var e=(function(t){for(var e=t<<12;m(e)-m(7973)>=0;)e^=7973<<m(e)-m(7973);return t<<12|e})(this.typeNumber),r=0;r<18;r++){var n=!t&&1===(e>>r&1);this.modules[Math.floor(r/3)][r%3+this.moduleCount-8-3]=n,this.modules[r%3+this.moduleCount-8-3][Math.floor(r/3)]=n}},setupTypeInfo:function(t){for(var e=r.ErrorCorrectLevel.M,n=function(t){for(var e=t<<10;m(e)-m(1335)>=0;)e^=1335<<m(e)-m(1335);return t<<10|e}(this.errorCorrectLevel<<3|e),o=0;o<15;o++){var i=!t&&1===(n>>o&1);o<6?this.modules[o][8]=i:o<8?this.modules[o+1][8]=i:this.modules[this.moduleCount-15+o][8]=i}for(var a=0;a<15;a++){var u=!t&&1===(n>>a&1);a<8?this.modules[8][this.moduleCount-a-1]=u:a<9?this.modules[8][15-a-1+1]=u:this.modules[8][15-a-1]=u}this.modules[this.moduleCount-8][8]=!t},mapData:function(t){for(var e=0,r=this.moduleCount-1,n=this.moduleCount-1,o=-1,i=0;n>0;n-=2){6==n&&n--;for(;;){for(var a=0;a<2;a++)if(null==this.modules[r][n-a]){var u=!1;i<t.length&&(u=1===(t[i]>>>a&1)),this.modules[r][n-a]=u,i++}if((r+=o)<0||this.moduleCount<=r)break}o=-o,r+=o}}},window.QRGen=function(t,e){var n=new O(0,r.ErrorCorrectLevel.M);n.addData(t),n.make();for(var o=e.getContext("2d"),i=e.width,a=n.getModuleCount(),u=Math.floor(i/a),l=Math.floor((i-u*a)/2),h=0;h<a;h++)for(var f=0;f<a;f++)n.isDark(h,f)&&o.fillRect(l+f*u,l+h*u,u,u)}}();
   </script>
 
-  <script>
-    const $ = id => document.getElementById(id);
-    const base = (()=>{const {protocol,host,pathname}=window.location;const path=pathname.endsWith("/")?pathname:pathname.split("/").slice(0,-1).join("/")+"/";return `${protocol}//${host}${path}`;})();
-    const coverCandidates = ["assets/cover.jpg","assets/cover.jpeg","assets/Cover.jpg","assets/Cover.jpeg"];
-    const audioCandidates = [
-      "assets/the-confident-mind-audio.mp3",
-      "assets/the-confident-mind-audio.m4a",
-      "assets/the-confident-mind-audio-overview.mp3"
-    ];
-    const videoCandidates = [
-      "assets/the-confident-mind-video.mp4",
-      "assets/the-confident-mind-video-overview.mp4"
-    ];
-    const qrAudioPNG = "assets/the-confident-mind-audio-qr.png";
-    const qrVideoPNG = "assets/the-confident-mind-video-qr.png";
+  <!-- 
+    Main application logic.
+    - Added 'defer' attribute to scripts to improve page load performance.
+    - Code is now wrapped in an event listener to ensure the DOM is fully loaded.
+    - Refactored for clarity, better error handling, and modern async/await syntax.
+  -->
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      const $ = id => document.getElementById(id);
 
-    async function headOK(url){ try{ const r = await fetch(url, {method:"HEAD", cache:"no-store"}); return r.ok; }catch(_){ return false; } }
-    async function resolveFirst(paths){ for(const p of paths){ const url = base+p; if(await headOK(url)) return url; } return null; }
+      const getBasePath = () => {
+        const { protocol, host, pathname } = window.location;
+        const path = pathname.endsWith("/") ? pathname : pathname.split("/").slice(0, -1).join("/") + "/";
+        return `${protocol}//${host}${path}`;
+      };
 
-    function setMedia(player, streamBtn, dlBtn, url){
-      player.innerHTML="";
-      const src = document.createElement("source");
-      if(player.tagName==="AUDIO"){
-        src.type = url.endsWith(".m4a") ? "audio/mp4" : "audio/mpeg";
-      }else{
-        src.type = "video/mp4";
-      }
-      src.src = url;
-      player.appendChild(src);
-      streamBtn.href = url;
-      dlBtn.href = url;
-      dlBtn.setAttribute("download", url.split("/").pop());
-      player.load();
-    }
+      const config = {
+        base: getBasePath(),
+        coverCandidates: ["assets/cover.jpg", "assets/cover.jpeg", "assets/Cover.jpg", "assets/Cover.jpeg"],
+        audioCandidates: ["assets/the-confident-mind-audio.mp3", "assets/the-confident-mind-audio.m4a", "assets/the-confident-mind-audio-overview.mp3"],
+        videoCandidates: ["assets/the-confident-mind-video.mp4", "assets/the-confident-mind-video-overview.mp4"],
+        qrAudioPNG: "assets/the-confident-mind-audio-qr.png",
+        qrVideoPNG: "assets/the-confident-mind-video-qr.png",
+      };
 
-    function tryShowQRPNG(imgEl, pngURL, fallbackCanvas, urlTextEl){
-      imgEl.onerror = ()=>{ imgEl.classList.add("hidden"); fallbackCanvas.classList.remove("hidden"); };
-      imgEl.onload  = ()=>{ fallbackCanvas.classList.add("hidden"); imgEl.classList.remove("hidden"); };
-      imgEl.src = pngURL;
-      urlTextEl.textContent = pngURL.replace(/.*\?data=/,''); // if using external QR service this would show target; here PNG is local
-    }
+      const headOK = async (url) => {
+        try {
+          const r = await fetch(url, { method: "HEAD", cache: "no-store", signal: AbortSignal.timeout(5000) });
+          return r.ok;
+        } catch (error) {
+          console.error(`HEAD request failed for ${url}:`, error);
+          return false;
+        }
+      };
 
-    function drawQR(canvas, targetURL, urlTextEl){
-      canvas.classList.remove("hidden");
-      QRGen(targetURL, canvas);
-      urlTextEl.textContent = targetURL;
-    }
+      const resolveFirst = async (paths) => {
+        for (const p of paths) {
+          const url = config.base + p;
+          if (await headOK(url)) return url;
+        }
+        return null;
+      };
 
-    async function init(){
-      $("year").textContent = new Date().getFullYear();
+      const setMedia = (player, streamBtn, dlBtn, copyBtn, url) => {
+        player.innerHTML = "";
+        const src = document.createElement("source");
+        if (player.tagName === "AUDIO") {
+          src.type = url.endsWith(".m4a") ? "audio/mp4" : "audio/mpeg";
+        } else {
+          src.type = "video/mp4";
+        }
+        src.src = url;
+        player.appendChild(src);
+        streamBtn.href = dlBtn.href = url;
+        dlBtn.setAttribute("download", url.split("/").pop());
+        player.load();
 
-      // Cover
-      const cover = await resolveFirst(coverCandidates);
-      if(cover){ $("cover").src = cover; $("coverNote").textContent = ""; }
-      else{
-        const ph = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='1600'><rect width='100%' height='100%' fill='${matchMedia('(prefers-color-scheme: dark)').matches ? '#16161a' : '#e9ecef'}'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#888' font-family='system-ui' font-size='42'>Cover not found</text></svg>`);
-        $("cover").src = ph;
-        $("coverNote").textContent = "No /assets/cover.jpg or /assets/cover.jpeg found.";
-      }
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(url).then(() => {
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => copyBtn.textContent = originalText, 2000);
+          }).catch(err => console.error('Failed to copy text: ', err));
+        });
+      };
 
-      // Audio
-      const audio = await resolveFirst(audioCandidates);
-      if(audio){
-        setMedia($("playerAudio"), $("audioStream"), $("audioDownload"), audio);
-        $("audioMeta").textContent = "Plays in-browser. Long-press on mobile to download.";
-      }else{
-        $("audioMeta").textContent = "Audio not found. Expected one of: "+audioCandidates.join(", ");
-      }
+      const setupQR = async (type, mediaUrl) => {
+        const pngPath = type === 'audio' ? config.qrAudioPNG : config.qrVideoPNG;
+        const pngUrl = config.base + pngPath;
+        const imgEl = $(`qr${type.charAt(0).toUpperCase() + type.slice(1)}Img`);
+        const canvasEl = $(`qr${type.charAt(0).toUpperCase() + type.slice(1)}`);
+        const textEl = $(`${type}URLText`);
 
-      // Video
-      const video = await resolveFirst(videoCandidates);
-      if(video){
-        setMedia($("playerVideo"), $("videoStream"), $("videoDownload"), video);
-        $("videoMeta").textContent = "H.264/AAC MP4. Plays in-browser.";
-      }else{
-        $("videoMeta").textContent = "Video not found. Expected one of: "+videoCandidates.join(", ");
-      }
+        if (await headOK(pngUrl)) {
+          imgEl.onerror = () => { 
+            imgEl.classList.add("hidden"); 
+            if (mediaUrl) {
+              canvasEl.classList.remove("hidden");
+              QRGen(mediaUrl, canvasEl);
+              textEl.textContent = mediaUrl;
+            } else {
+              textEl.textContent = `QR unavailable: ${type} file not found.`;
+            }
+          };
+          imgEl.onload = () => { 
+            canvasEl.classList.add("hidden"); 
+            imgEl.classList.remove("hidden"); 
+          };
+          imgEl.src = pngUrl;
+          textEl.textContent = pngPath;
+        } else if (mediaUrl) {
+          canvasEl.classList.remove("hidden");
+          QRGen(mediaUrl, canvasEl);
+          textEl.textContent = mediaUrl;
+        } else {
+          textEl.textContent = `QR unavailable: ${type} file not found.`;
+        }
+      };
+      
+      const init = async () => {
+        $("year").textContent = new Date().getFullYear();
 
-      // QR area
-      const audioQRPNGURL = base + qrAudioPNG;
-      const videoQRPNGURL = base + qrVideoPNG;
-      // Prefer PNGs if present; else draw canvas with the resolved media URLs
-      if(await headOK(audioQRPNGURL)){ 
-        tryShowQRPNG($("qrAudioImg"), audioQRPNGURL, $("qrAudio"), $("audioURLText"));
-      } else if(audio){ 
-        drawQR($("qrAudio"), audio, $("audioURLText"));
-      } else {
-        $("audioURLText").textContent = "QR unavailable: audio file not found.";
-      }
+        // Cover
+        const coverUrl = await resolveFirst(config.coverCandidates);
+        if (coverUrl) {
+          $("cover").src = coverUrl;
+          $("coverNote").textContent = "";
+        } else {
+          const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+          const fillColor = isDark ? '#16161a' : '#e9ecef';
+          const ph = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='1600'><rect width='100%' height='100%' fill='${fillColor}'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#888' font-family='system-ui' font-size='42'>Cover not found</text></svg>`)}`;
+          $("cover").src = ph;
+          $("coverNote").textContent = "No /assets/cover.jpg or /assets/cover.jpeg found.";
+        }
 
-      if(await headOK(videoQRPNGURL)){ 
-        tryShowQRPNG($("qrVideoImg"), videoQRPNGURL, $("qrVideo"), $("videoURLText"));
-      } else if(video){ 
-        drawQR($("qrVideo"), video, $("videoURLText"));
-      } else {
-        $("videoURLText").textContent = "QR unavailable: video file not found.";
-      }
-    }
+        // Media
+        const audioUrl = await resolveFirst(config.audioCandidates);
+        if (audioUrl) {
+          setMedia($("playerAudio"), $("audioStream"), $("audioDownload"), $("copyAudio"), audioUrl);
+          $("audioMeta").textContent = "Plays in-browser. Long-press on mobile to download.";
+        } else {
+          $("audioMeta").textContent = "Audio not found. Expected one of: " + config.audioCandidates.join(", ");
+        }
 
-    init();
+        const videoUrl = await resolveFirst(config.videoCandidates);
+        if (videoUrl) {
+          setMedia($("playerVideo"), $("videoStream"), $("videoDownload"), $("copyVideo"), videoUrl);
+          $("videoMeta").textContent = "H.264/AAC MP4. Plays in-browser.";
+        } else {
+          $("videoMeta").textContent = "Video not found. Expected one of: " + config.videoCandidates.join(", ");
+        }
+
+        // QR Codes
+        await Promise.all([
+          setupQR('audio', audioUrl),
+          setupQR('video', videoUrl)
+        ]);
+      };
+
+      init().catch(console.error);
+    });
   </script>
-  
+
   <!-- Entrance Overlay Script -->
-  <script>
+  <script defer>
     document.addEventListener('DOMContentLoaded', () => {
       const overlay = document.getElementById('neural-overlay');
       const canvas = document.getElementById('neural-canvas');
+      if (!canvas || typeof canvas.getContext !== 'function') {
+          overlay.classList.add('fade-out');
+          return;
+      }
       const ctx = canvas.getContext('2d');
       let neurons = [];
       let particles = [];
       let animationFrameId;
 
-      const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-      const goldColor = '#FFD700'; // Added gold color
-      const pulseColors = [accentColor, goldColor]; // Array of possible pulse colors
-      const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+      const goldColor = '#FFD700';
+      const pulseColors = [accentColor, goldColor];
 
-      function resizeCanvas() {
+      const resizeCanvas = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-      }
+      };
       
       class Neuron {
         constructor() {
@@ -304,14 +555,12 @@
           this.radius = Math.random() * 2 + 1;
           this.connections = [];
         }
-
         draw() {
           ctx.beginPath();
           ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
           ctx.fillStyle = accentColor;
           ctx.globalAlpha = 0.5;
           ctx.fill();
-          ctx.globalAlpha = 1;
         }
       }
 
@@ -319,63 +568,55 @@
         constructor(startX, startY, endX, endY) {
           this.x = startX;
           this.y = startY;
-          this.endX = endX;
-          this.endY = endY;
           this.size = Math.random() * 1.5 + 1;
           this.life = 100;
           const dx = endX - startX;
           const dy = endY - startY;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          this.speed = Math.random() * 2 + 1;
-          this.velX = (dx / dist) * this.speed;
-          this.velY = (dy / dist) * this.speed;
+          const speed = Math.random() * 2 + 1;
+          this.velX = (dx / dist) * speed;
+          this.velY = (dy / dist) * speed;
           this.color = pulseColors[Math.floor(Math.random() * pulseColors.length)];
         }
-
         update() {
           this.x += this.velX;
           this.y += this.velY;
           this.life--;
+          return this.life > 0;
         }
-
         draw() {
           ctx.beginPath();
           ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
           ctx.fillStyle = this.color;
           ctx.globalAlpha = this.life / 100;
           ctx.fill();
-          ctx.globalAlpha = 1;
         }
       }
 
-      function initAnimation() {
+      const initAnimation = () => {
         resizeCanvas();
         neurons = [];
-        particles = [];
         const neuronCount = Math.floor((canvas.width * canvas.height) / 15000);
-
         for (let i = 0; i < neuronCount; i++) {
           neurons.push(new Neuron());
         }
-        
         neurons.forEach(neuron => {
-          let closest = [];
-          neurons.forEach(other => {
-            if(neuron !== other) {
-              closest.push({
-                dist: Math.sqrt(Math.pow(neuron.x - other.x, 2) + Math.pow(neuron.y - other.y, 2)),
-                node: other
-              });
-            }
-          });
-          closest.sort((a,b) => a.dist - b.dist);
+          let closest = neurons
+            .filter(other => neuron !== other)
+            .map(other => ({
+              dist: Math.hypot(neuron.x - other.x, neuron.y - other.y),
+              node: other,
+            }))
+            .sort((a, b) => a.dist - b.dist);
           neuron.connections = closest.slice(0, 3).map(c => c.node);
         });
-      }
+      };
       
-      function animate() {
+      const animate = () => {
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         ctx.fillStyle = `rgba(${isDarkMode ? '11, 12, 16' : '255, 255, 255'}, 0.1)`;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 1;
 
         neurons.forEach(neuron => {
           neuron.draw();
@@ -386,475 +627,49 @@
             ctx.strokeStyle = accentColor;
             ctx.globalAlpha = 0.15;
             ctx.stroke();
-            ctx.globalAlpha = 1;
           });
         });
         
         if (Math.random() < 0.2) {
-            const startNeuron = neurons[Math.floor(Math.random() * neurons.length)];
-            if(startNeuron.connections.length > 0){
-                const endNeuron = startNeuron.connections[Math.floor(Math.random() * startNeuron.connections.length)];
-                particles.push(new Particle(startNeuron.x, startNeuron.y, endNeuron.x, endNeuron.y));
-            }
+          const startNeuron = neurons[Math.floor(Math.random() * neurons.length)];
+          if (startNeuron && startNeuron.connections.length > 0) {
+            const endNeuron = startNeuron.connections[Math.floor(Math.random() * startNeuron.connections.length)];
+            particles.push(new Particle(startNeuron.x, startNeuron.y, endNeuron.x, endNeuron.y));
+          }
         }
         
-        particles.forEach((p, index) => {
-          p.update();
-          p.draw();
-          if (p.life <= 0) {
-            particles.splice(index, 1);
-          }
+        particles = particles.filter(p => {
+            if (p.update()){
+                p.draw();
+                return true;
+            }
+            return false;
         });
         
         animationFrameId = requestAnimationFrame(animate);
-      }
+      };
       
-      initAnimation();
-      animate();
-
-      window.addEventListener('resize', () => {
-        cancelAnimationFrame(animationFrameId);
+      const start = () => {
         initAnimation();
         animate();
-      });
+        setTimeout(() => overlay.classList.add('fade-out'), 1500);
+      };
 
-      // Fade out the overlay
-      setTimeout(() => {
-        overlay.classList.add('fade-out');
-      }, 1500); // Animation duration before fade
-
-    });
-  </script>
-</body>
-</html>
-
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>The Confident Mind — Reader Bonus</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Stream or download the bonus audio and video for The Confident Mind." />
-  <meta name="color-scheme" content="light dark" />
-  <style>
-    :root{--bg:#0b0c10;--fg:#f6f7f9;--muted:#9aa3ad;--card:#14171c;--line:#252b32;--accent:#5aa9ff;--radius:18px;--shadow:0 12px 30px rgba(0,0,0,.35);--maxw:1100px}
-    @media (prefers-color-scheme: light){:root{--bg:#fff;--fg:#0e1116;--muted:#5a6572;--card:#f5f7fa;--line:#e7ecf1;--accent:#2563eb}}
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial}
-    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
-    .wrap{max-width:var(--maxw);margin:0 auto;padding:28px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
-    .title{font-weight:800;font-size:clamp(20px,3vw,28px)}
-    .badge{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid color-mix(in oklab,var(--accent) 40%,transparent);color:var(--accent);background:color-mix(in oklab,var(--accent) 12%,transparent)}
-    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
-    @media (max-width:980px){.grid{grid-template-columns:1fr}}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .hero{padding:14px}
-    .cover{width:100%;border-radius:14px;display:block;background:#0e1116;object-fit:cover}
-    .note{font-size:13px;color:var(--muted);margin:10px 4px 0}
-    .panel{padding:16px}
-    .section{border-top:1px solid var(--line);padding:16px}
-    .section:first-child{border-top:none}
-    .h2{margin:0 0 12px 0;font-size:18px;font-weight:700}
-    .meta{font-size:13px;color:var(--muted)}
-    .row{display:flex;flex-wrap:wrap;gap:10px}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);color:var(--fg);background:transparent;text-decoration:none;cursor:pointer}
-    .btn:hover{background:rgba(127,127,127,.12)}
-    .btn.primary{background:var(--accent);color:#fff;border-color:color-mix(in oklab,var(--accent) 60%,#000)}
-    .stack{display:flex;flex-direction:column;gap:10px}
-    .price-info{font-size:14px; margin-bottom: 8px;}
-    .qrgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width:620px){.qrgrid{grid-template-columns:1fr}}
-    .qrbox{display:grid;place-items:center;background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:12px}
-    .qrbox img, .qrbox canvas{background:#fff;border-radius:8px;max-width:100%;height:auto}
-    .linkline{font-size:12px;color:var(--muted);word-break:break-all;margin-top:6px;text-align:center}
-    footer{margin-top:22px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-    footer a{color:var(--muted);text-decoration:underline} footer a:hover{color:var(--fg)}
-    .hidden{display:none!important}
-    
-    /* Entrance Overlay Styles */
-    #neural-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;transition:opacity 1s ease-out, visibility 1s ease-out;opacity:1;visibility:visible}
-    #neural-overlay.fade-out{opacity:0;visibility:hidden;pointer-events:none}
-    #neural-canvas{display:block;width:100%;height:100%}
-  </style>
-</head>
-<body>
-
-  <!-- Entrance Overlay HTML -->
-  <div id="neural-overlay">
-    <canvas id="neural-canvas"></canvas>
-  </div>
-
-  <div class="wrap">
-    <header>
-      <div class="title">The Confident Mind — Reader Bonus</div>
-      <span class="badge">For readers</span>
-    </header>
-
-    <div class="grid">
-      <section class="card hero">
-        <img id="cover" class="cover" alt="The Confident Mind — Book Cover">
-        <p class="note" id="coverNote">Cover auto-detects .jpg or .jpeg in <code>/assets</code>.</p>
-      </section>
-
-      <section class="card panel">
-        <div class="section">
-          <div class="h2">Purchase Your Copy</div>
-
-          <!-- eBook Option -->
-          <div style="margin-bottom: 24px;">
-            <div class="price-info">
-              <strong>eBook:</strong> $6.99 <s style="color:var(--muted);">$10.99</s> (35% off)
-            </div>
-            <a class="btn primary" href="https://buy.stripe.com/eVq00j15IfFO0js89Q4ko01" target="_blank" rel="noopener">Buy eBook Directly</a>
-          </div>
-
-          <!-- Hardcover Option -->
-          <div style="margin-bottom: 24px;">
-            <div class="price-info">
-              <strong>Hardcover:</strong> $12.99 <s style="color:var(--muted);">$19.99</s> (35% off)
-            </div>
-            <a class="btn primary" href="https://buy.stripe.com/14AfZheWy1OY7LU4XE4ko00" target="_blank" rel="noopener">Buy Hardcover Directly</a>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="h2">Audio overview</div>
-          <div class="stack">
-            <audio id="playerAudio" controls preload="metadata" style="width:100%;border-radius:10px;"></audio>
-            <div class="row">
-              <a class="btn primary" id="audioStream" target="_blank" rel="noopener">Stream</a>
-              <a class="btn" id="audioDownload" download>Download</a>
-              <button class="btn" id="copyAudio">Copy link</button>
-            </div>
-            <div class="meta" id="audioMeta">Detecting file…</div>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="h2">Video summary</div>
-          <div class="stack">
-            <video id="playerVideo" controls preload="metadata" playsinline style="width:100%;border-radius:10px;"></video>
-            <div class="row">
-              <a class="btn primary" id="videoStream" target="_blank" rel="noopener">Stream</a>
-              <a class="btn" id="videoDownload" download>Download</a>
-              <button class="btn" id="copyVideo">Copy link</button>
-            </div>
-            <div class="meta" id="videoMeta">Detecting file…</div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <section class="card" style="margin-top:18px">
-      <div class="section">
-        <div class="h2">QR codes (always visible)</div>
-        <div class="qrgrid">
-          <div class="qrbox">
-            <div style="font-weight:600;margin-bottom:6px;text-align:center">Audio</div>
-            <!-- Prefer PNG file if present -->
-            <img id="qrAudioImg" alt="Audio QR" class="hidden">
-            <canvas id="qrAudio" width="400" height="400" class="hidden" aria-label="Audio QR"></canvas>
-            <div class="linkline" id="audioURLText"></div>
-          </div>
-          <div class="qrbox">
-            <div style="font-weight:600;margin-bottom:6px;text-align:center">Video</div>
-            <img id="qrVideoImg" alt="Video QR" class="hidden">
-            <canvas id="qrVideo" width="400" height="400" class="hidden" aria-label="Video QR"></canvas>
-            <div class="linkline" id="videoURLText"></div>
-          </div>
-        </div>
-        <div class="meta" style="margin-top:8px">Page prefers QR PNGs at <code>/assets/the-confident-mind-audio-qr.png</code> and <code>/assets/the-confident-mind-video-qr.png</code>. If missing, it draws QR locally on canvas.</div>
-      </div>
-    </section>
-
-    <footer>
-      <div>© <span id="year"></span> The Confident Mind</div>
-      <div style="text-align:center;">
-        <a href="https://www.amazon.com/s?k=The+Confident+Mind+Douglas+Mitchell" target="_blank" rel="noopener">Amazon</a> &bull;
-        <a href="https://douglasmitchell.info" target="_blank" rel="noopener">douglasmitchell.info</a> &bull;
-        <a href="https://github.com/senpai-sama7" target="_blank" rel="noopener">GitHub</a>
-      </div>
-      <div style="text-align:right;">If a link fails, check file path.</div>
-    </footer>
-  </div>
-
-  <!-- Tiny QR generator (inlined, MIT from qrcodejs) -->
-  <script>
-  !function(){function E(t){this.mode=4,this.data=t}function O(t,e){this.typeNumber=t,this.errorCorrectLevel=e,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}
-  var r={ErrorCorrectLevel:{M:0},PAD0:236,PAD1:17};
-  E.prototype={getLength:function(){return this.data.length},write:function(t){for(var e=0;e<this.data.length;e++)t.put(this.data.charCodeAt(e),8)}};
-  var n=function(){this.buffer=[],this.length=0};n.prototype.put=function(t,e){for(var r=0;r<e;r++)this.putBit(t>>>e-r-1&1)},n.prototype.getLengthInBits=function(){return this.length},n.prototype.putBit=function(t){this.buffer.push(t?1:0),this.length++};
-  function d(t,e){for(;t.getLengthInBits()+4<=8*e;)t.put(0,4);for(;t.getLengthInBits()%8!=0;)t.put(0,1);for(;t.getLengthInBits()<8*e;)t.put(236,8),t.getLengthInBits()<8*e&&t.put(17,8)}
-  function s(t,e){var r=Array(e);for(var n=0;n<e;n++)r[n]=0;return r[0]=1,{get:function(t){return r[t]},set:function(t,e){r[t]=e},getLength:function(){for(var t=r.length-1;0==r[t]&&t>=0;)t--;return t+1},mod:function(n){if(this.getLength()-n.getLength()<0)return this;for(var o=this.getLength(),i=Array(o);i.set?i.set(r):i.splice.apply(i,[0,o].concat(r)),a=this.getLength()-n.getLength();a>=0;){for(var u=0;u<n.getLength();u++)i[u+a]^=n.get(u);for(;a>=0&&!i[a];)a--}return s(0,0),{get:function(t){return i[t]},getLength:function(){for(var t=i.length-1;0==i[t]&&t>=0;)t--;return t+1}}}}
-  function c(t,e){return[{totalCount:26,dataCount:19},{totalCount:44,dataCount:34},{totalCount:70,dataCount:55},{totalCount:100,dataCount:80},{totalCount:134,dataCount:108},{totalCount:172,dataCount:136},{totalCount:196,dataCount:154},{totalCount:242,dataCount:192},{totalCount:292,dataCount:230},{totalCount:346,dataCount:271},{totalCount:404,dataCount:321},{totalCount:466,dataCount:365},{totalCount:532,dataCount:432},{totalCount:581,dataCount:474},{totalCount:655,dataCount:513},{totalCount:733,dataCount:604},{totalCount:815,dataCount:691},{totalCount:901,dataCount:779},{totalCount:991,dataCount:857},{totalCount:1085,dataCount:949},{totalCount:1156,dataCount:1024},{totalCount:1258,dataCount:1111},{totalCount:1364,dataCount:1225},{totalCount:1474,dataCount:1341},{totalCount:1588,dataCount:1458},{totalCount:1706,dataCount:1576},{totalCount:1828,dataCount:1704},{totalCount:1921,dataCount:1787},{totalCount:2051,dataCount:1911},{totalCount:2185,dataCount:2045},{totalCount:2323,dataCount:2181},{totalCount:2465,dataCount:2325},{totalCount:2611,dataCount:2461},{totalCount:2761,dataCount:2609},{totalCount:2876,dataCount:2725},{totalCount:3034,dataCount:2872},{totalCount:3196,dataCount:3024},{totalCount:3362,dataCount:3180},{totalCount:3532,dataCount:3340},{totalCount:3706,dataCount:3506}][Math.min(Math.max(t-1,0),39)]}
-  function m(t){for(var e=0;0!=t;)e++,t>>>=1;return e}
-  O.prototype={addData:function(t){this.dataList.push(new E(t)),this.dataCache=null},isDark:function(t,e){if(null==this.modules)throw new Error("Not initialized");return this.modules[t][e]},getModuleCount:function(){return this.moduleCount},make:function(){if(this.typeNumber<1){for(var t=1;t<40;t++){for(var e=new O(t,this.errorCorrectLevel),r=0;r<this.dataList.length;r++)e.addData(this.dataList[r].data);if(e.makeImpl(),e.dataCache)break}this.typeNumber=t}else this.makeImpl()},makeImpl:function(){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var t=0;t<this.moduleCount;t++){this.modules[t]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[t][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupTimingPattern(),this.setupTypeInfo(!0),this.typeNumber>=7&&this.setupTypeNumber(!0),null==this.dataCache&&(this.dataCache=function(t,e,r){for(var n=c(t,e),o=new n2=new n,i=0;i<r.length;i++)o.put(4,4),o.put(r[i].getLength(),n.length<10?8:16),r[i].write(o);d(o,n.totalDataCount);return function(t,e){for(var r=0,n=0,o=0,i=0,a=0,u=0,l=new Array(e.length),h=new Array(e.length),f=0;f<e.length;f++){var p=e[f].dataCount,g=e[f].totalCount-p;l[f]=new Array(p);for(var v=0;v<p;v++)l[f][v]=255&t.buffer[v+a];a+=p;for(var y=function(t){for(var e=0,r=1,n=[];e<t;e++)n.push(r),r=r<<1^285*(r>>7);return n}(g),w=s(y.length-1),b=s(p),v2=0;v2<p;v2++)b.set(v2,l[f][v2]);b=w.mod(b);for(v2=0;v2<g;v2++)h[f]=h[f]||[],h[f][v2]=255&b.get(v2)}for(var L=0,S=0;S<e.length;S++)L=Math.max(L,e[S].totalCount);for(var C=[],x=0;x<L;x++)for(S=0;S<e.length;S++){var D=e[S];x<D.dataCount&&C.push(l[S][x])}for(x=0;x<L;x++)for(S=0;S<e.length;S++){D=e[S];x<D.totalCount-D.dataCount&&C.push(h[S][x])}return C}(o,n)}(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache)},
-    setupPositionProbePattern:function(t,e){for(var r=-1;r<=7;r++)if(!(t+r<=-1||this.moduleCount<=t+r))for(var n=-1;n<=7;n++)e+n<=-1||this.moduleCount<=e+n||(this.modules[t+r][e+n]=r>=0&&r<=6&&(0==n||6==n)||n>=0&&n<=6&&(0==r||6==r)||r>=2&&r<=4&&n>=2&&n<=4)},
-    setupTimingPattern:function(){for(var t=8;t<this.moduleCount-8;t++)null==this.modules[t][6]&&(this.modules[t][6]=t%2==0),null==this.modules[6][t]&&(this.modules[6][t]=t%2==0)},
-    setupTypeNumber:function(t){for(var e=(function(t){for(var e=t<<12;m(e)-m(7973)>=0;)e^=7973<<m(e)-m(7973);return t<<12|e})(this.typeNumber),r=0;r<18;r++){var n=!t&&this.modules[Math.floor(r/3)][r%3+this.moduleCount-8-3];this.modules[Math.floor(r/3)][r%3+this.moduleCount-8-3]=n}},
-    setupTypeInfo:function(t){for(var e=r.ErrorCorrectLevel.M,n=function(t){for(var e=t<<10;m(e)-m(1335)>=0;)e^=1335<<m(e)-m(1335);return t<<10|e}(this.errorCorrectLevel<<3|e),o=0;o<15;o++){var i=!t&&this.modules[o<6?o:o<8?o+1:o+1][8];this.modules[o<6?o:o<8?o+1:o+1][8]=i}for(var a=0;a<15;a++){var u=!t&&this.modules[8][a<8?a:a+1];this.modules[8][a<8?a+1]=u}},
-    mapData:function(t){for(var e=0,r=this.moduleCount-1,n=this.moduleCount-1,o=-1,i=0;n>0;n-=2){6==n&&n--;for(;;){for(var a=0;a<2;a++)null==this.modules[r][n-a]&&(this.modules[r][n-a]=i<t.length?1==(t[i]>>>a&1):!1,i++);if((r+=o)<0||this.moduleCount<=r)break}o=-o,r+=o}}
-  }; window.QRGen=function(url, canvas){var q=new O(0,r.ErrorCorrectLevel.M); q.addData(url); q.make();
-    var c=canvas.getContext("2d"), size=canvas.width, mc=q.getModuleCount();
-    var tile=Math.floor(size/mc), offset=Math.floor((size-tile*mc)/2);
-    c.fillStyle="#fff"; c.fillRect(0,0,size,size); c.fillStyle="#000";
-    for(var row=0;row<mc;row++) for(var col=0;col<mc;col++) if(q.isDark(row,col))
-      c.fillRect(offset+col*tile, offset+row*tile, tile, tile);
-  }}();
-  </script>
-
-  <script>
-    const $ = id => document.getElementById(id);
-    const base = (()=>{const {protocol,host,pathname}=window.location;const path=pathname.endsWith("/")?pathname:pathname.split("/").slice(0,-1).join("/")+"/";return `${protocol}//${host}${path}`;})();
-    const coverCandidates = ["assets/cover.jpg","assets/cover.jpeg","assets/Cover.jpg","assets/Cover.jpeg"];
-    const audioCandidates = [
-      "assets/the-confident-mind-audio.mp3",
-      "assets/the-confident-mind-audio.m4a",
-      "assets/the-confident-mind-audio-overview.mp3"
-    ];
-    const videoCandidates = [
-      "assets/the-confident-mind-video.mp4",
-      "assets/the-confident-mind-video-overview.mp4"
-    ];
-    const qrAudioPNG = "assets/the-confident-mind-audio-qr.png";
-    const qrVideoPNG = "assets/the-confident-mind-video-qr.png";
-
-    async function headOK(url){ try{ const r = await fetch(url, {method:"HEAD", cache:"no-store"}); return r.ok; }catch(_){ return false; } }
-    async function resolveFirst(paths){ for(const p of paths){ const url = base+p; if(await headOK(url)) return url; } return null; }
-
-    function setMedia(player, streamBtn, dlBtn, url){
-      player.innerHTML="";
-      const src = document.createElement("source");
-      if(player.tagName==="AUDIO"){
-        src.type = url.endsWith(".m4a") ? "audio/mp4" : "audio/mpeg";
-      }else{
-        src.type = "video/mp4";
-      }
-      src.src = url;
-      player.appendChild(src);
-      streamBtn.href = url;
-      dlBtn.href = url;
-      dlBtn.setAttribute("download", url.split("/").pop());
-      player.load();
-    }
-
-    function tryShowQRPNG(imgEl, pngURL, fallbackCanvas, urlTextEl){
-      imgEl.onerror = ()=>{ imgEl.classList.add("hidden"); fallbackCanvas.classList.remove("hidden"); };
-      imgEl.onload  = ()=>{ fallbackCanvas.classList.add("hidden"); imgEl.classList.remove("hidden"); };
-      imgEl.src = pngURL;
-      urlTextEl.textContent = pngURL.replace(/.*\?data=/,''); // if using external QR service this would show target; here PNG is local
-    }
-
-    function drawQR(canvas, targetURL, urlTextEl){
-      canvas.classList.remove("hidden");
-      QRGen(targetURL, canvas);
-      urlTextEl.textContent = targetURL;
-    }
-
-    async function init(){
-      $("year").textContent = new Date().getFullYear();
-
-      // Cover
-      const cover = await resolveFirst(coverCandidates);
-      if(cover){ $("cover").src = cover; $("coverNote").textContent = ""; }
-      else{
-        const ph = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='1600'><rect width='100%' height='100%' fill='${matchMedia('(prefers-color-scheme: dark)').matches ? '#16161a' : '#e9ecef'}'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#888' font-family='system-ui' font-size='42'>Cover not found</text></svg>`);
-        $("cover").src = ph;
-        $("coverNote").textContent = "No /assets/cover.jpg or /assets/cover.jpeg found.";
-      }
-
-      // Audio
-      const audio = await resolveFirst(audioCandidates);
-      if(audio){
-        setMedia($("playerAudio"), $("audioStream"), $("audioDownload"), audio);
-        $("audioMeta").textContent = "Plays in-browser. Long-press on mobile to download.";
-      }else{
-        $("audioMeta").textContent = "Audio not found. Expected one of: "+audioCandidates.join(", ");
-      }
-
-      // Video
-      const video = await resolveFirst(videoCandidates);
-      if(video){
-        setMedia($("playerVideo"), $("videoStream"), $("videoDownload"), video);
-        $("videoMeta").textContent = "H.264/AAC MP4. Plays in-browser.";
-      }else{
-        $("videoMeta").textContent = "Video not found. Expected one of: "+videoCandidates.join(", ");
-      }
-
-      // QR area
-      const audioQRPNGURL = base + qrAudioPNG;
-      const videoQRPNGURL = base + qrVideoPNG;
-      // Prefer PNGs if present; else draw canvas with the resolved media URLs
-      if(await headOK(audioQRPNGURL)){ 
-        tryShowQRPNG($("qrAudioImg"), audioQRPNGURL, $("qrAudio"), $("audioURLText"));
-      } else if(audio){ 
-        drawQR($("qrAudio"), audio, $("audioURLText"));
-      } else {
-        $("audioURLText").textContent = "QR unavailable: audio file not found.";
-      }
-
-      if(await headOK(videoQRPNGURL)){ 
-        tryShowQRPNG($("qrVideoImg"), videoQRPNGURL, $("qrVideo"), $("videoURLText"));
-      } else if(video){ 
-        drawQR($("qrVideo"), video, $("videoURLText"));
-      } else {
-        $("videoURLText").textContent = "QR unavailable: video file not found.";
-      }
-    }
-
-    init();
-  </script>
-  
-  <!-- Entrance Overlay Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const overlay = document.getElementById('neural-overlay');
-      const canvas = document.getElementById('neural-canvas');
-      const ctx = canvas.getContext('2d');
-      let neurons = [];
-      let particles = [];
-      let animationFrameId;
-
-      const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-      const goldColor = '#FFD700'; // Added gold color
-      const pulseColors = [accentColor, goldColor]; // Array of possible pulse colors
-      const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
-
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-      
-      class Neuron {
-        constructor() {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height;
-          this.radius = Math.random() * 2 + 1;
-          this.connections = [];
-        }
-
-        draw() {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-          ctx.fillStyle = accentColor;
-          ctx.globalAlpha = 0.5;
-          ctx.fill();
-          ctx.globalAlpha = 1;
-        }
-      }
-
-      class Particle {
-        constructor(startX, startY, endX, endY) {
-          this.x = startX;
-          this.y = startY;
-          this.endX = endX;
-          this.endY = endY;
-          this.size = Math.random() * 1.5 + 1;
-          this.life = 100;
-          const dx = endX - startX;
-          const dy = endY - startY;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          this.speed = Math.random() * 2 + 1;
-          this.velX = (dx / dist) * this.speed;
-          this.velY = (dy / dist) * this.speed;
-          this.color = pulseColors[Math.floor(Math.random() * pulseColors.length)];
-        }
-
-        update() {
-          this.x += this.velX;
-          this.y += this.velY;
-          this.life--;
-        }
-
-        draw() {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fillStyle = this.color;
-          ctx.globalAlpha = this.life / 100;
-          ctx.fill();
-          ctx.globalAlpha = 1;
-        }
-      }
-
-      function initAnimation() {
-        resizeCanvas();
-        neurons = [];
+      const debouncedResize = () => {
+        cancelAnimationFrame(animationFrameId);
         particles = [];
-        const neuronCount = Math.floor((canvas.width * canvas.height) / 15000);
-
-        for (let i = 0; i < neuronCount; i++) {
-          neurons.push(new Neuron());
-        }
-        
-        neurons.forEach(neuron => {
-          let closest = [];
-          neurons.forEach(other => {
-            if(neuron !== other) {
-              closest.push({
-                dist: Math.sqrt(Math.pow(neuron.x - other.x, 2) + Math.pow(neuron.y - other.y, 2)),
-                node: other
-              });
-            }
-          });
-          closest.sort((a,b) => a.dist - b.dist);
-          neuron.connections = closest.slice(0, 3).map(c => c.node);
-        });
-      }
-      
-      function animate() {
-        ctx.fillStyle = `rgba(${isDarkMode ? '11, 12, 16' : '255, 255, 255'}, 0.1)`;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        neurons.forEach(neuron => {
-          neuron.draw();
-          neuron.connections.forEach(conn => {
-            ctx.beginPath();
-            ctx.moveTo(neuron.x, neuron.y);
-            ctx.lineTo(conn.x, conn.y);
-            ctx.strokeStyle = accentColor;
-            ctx.globalAlpha = 0.15;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-          });
-        });
-        
-        if (Math.random() < 0.2) {
-            const startNeuron = neurons[Math.floor(Math.random() * neurons.length)];
-            if(startNeuron.connections.length > 0){
-                const endNeuron = startNeuron.connections[Math.floor(Math.random() * startNeuron.connections.length)];
-                particles.push(new Particle(startNeuron.x, startNeuron.y, endNeuron.x, endNeuron.y));
-            }
-        }
-        
-        particles.forEach((p, index) => {
-          p.update();
-          p.draw();
-          if (p.life <= 0) {
-            particles.splice(index, 1);
-          }
-        });
-        
-        animationFrameId = requestAnimationFrame(animate);
-      }
-      
-      initAnimation();
-      animate();
-
-      window.addEventListener('resize', () => {
-        cancelAnimationFrame(animationFrameId);
         initAnimation();
         animate();
+      };
+      
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(debouncedResize, 250);
       });
 
-      // Fade out the overlay
-      setTimeout(() => {
-        overlay.classList.add('fade-out');
-      }, 1500); // Animation duration before fade
-
+      start();
     });
   </script>
 </body>
 </html>
-
