@@ -110,12 +110,14 @@
     }
 
     .cover {
-      width: 100%;
-      aspect-ratio: 1200 / 1600; /* Re-instated to create a stable container */
+      display: block; /* Ensures the image is treated as a block element */
+      max-width: 100%; /* A fallback safeguard for responsive images */
+      width: 100%;    /* Makes the image fill the container's width */
+      height: auto;   /* Scales the height proportionally to the new width, preserving the aspect ratio */
       border-radius: 14px;
-      display: block;
       background-color: #0e1116;
-      object-fit: contain; /* Ensures the entire image fits within the container without being cropped */
+      /* By removing aspect-ratio and object-fit, we allow the image to naturally dictate its own height based on its width.
+         This is the most reliable method for responsive images and should prevent any part of the image from being cut off. */
     }
 
     .note {
@@ -691,4 +693,5 @@
   </script>
 </body>
 </html>
+
 
