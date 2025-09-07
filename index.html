@@ -25,19 +25,21 @@
     .panel{padding:16px}
     .section{border-top:1px solid var(--line);padding:16px}
     .section:first-child{border-top:none}
-    .h2{margin:0 0 8px 0;font-size:18px;font-weight:700}
+    .h2{margin:0 0 12px 0;font-size:18px;font-weight:700}
     .meta{font-size:13px;color:var(--muted)}
     .row{display:flex;flex-wrap:wrap;gap:10px}
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);color:var(--fg);background:transparent;text-decoration:none;cursor:pointer}
     .btn:hover{background:rgba(127,127,127,.12)}
     .btn.primary{background:var(--accent);color:#fff;border-color:color-mix(in oklab,var(--accent) 60%,#000)}
     .stack{display:flex;flex-direction:column;gap:10px}
+    .price-info{font-size:14px; margin-bottom: 8px;}
     .qrgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     @media (max-width:620px){.qrgrid{grid-template-columns:1fr}}
     .qrbox{display:grid;place-items:center;background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:12px}
     .qrbox img, .qrbox canvas{background:#fff;border-radius:8px;max-width:100%;height:auto}
     .linkline{font-size:12px;color:var(--muted);word-break:break-all;margin-top:6px;text-align:center}
-    footer{margin-top:22px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    footer{margin-top:22px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    footer a{color:var(--muted);text-decoration:underline} footer a:hover{color:var(--fg)}
     .hidden{display:none!important}
   </style>
 </head>
@@ -56,9 +58,22 @@
 
       <section class="card panel">
         <div class="section">
-          <div class="h2">Buy the book</div>
-          <div class="row">
-            <a class="btn primary" href="https://www.amazon.com/s?k=The+Confident+Mind+Douglas+Mitchell" target="_blank" rel="noopener">Open on Amazon</a>
+          <div class="h2">Purchase Your Copy</div>
+
+          <!-- eBook Option -->
+          <div style="margin-bottom: 24px;">
+            <div class="price-info">
+              <strong>eBook:</strong> $6.99 <s style="color:var(--muted);">$10.99</s> (35% off)
+            </div>
+            <a class="btn primary" href="https://buy.stripe.com/eVq00j15IfFO0js89Q4ko01" target="_blank" rel="noopener">Buy eBook Directly</a>
+          </div>
+
+          <!-- Hardcover Option -->
+          <div style="margin-bottom: 24px;">
+            <div class="price-info">
+              <strong>Hardcover:</strong> $12.99 <s style="color:var(--muted);">$19.99</s> (35% off)
+            </div>
+            <a class="btn primary" href="https://buy.stripe.com/14AfZheWy1OY7LU4XE4ko00" target="_blank" rel="noopener">Buy Hardcover Directly</a>
           </div>
         </div>
 
@@ -114,7 +129,12 @@
 
     <footer>
       <div>© <span id="year"></span> The Confident Mind</div>
-      <div>If a link fails, check filename and path case in <code>/assets</code>.</div>
+      <div style="text-align:center;">
+        <a href="https://www.amazon.com/s?k=The+Confident+Mind+Douglas+Mitchell" target="_blank" rel="noopener">Amazon</a> &bull;
+        <a href="https://douglasmitchell.info" target="_blank" rel="noopener">douglasmitchell.info</a> &bull;
+        <a href="https://github.com/senpai-sama7" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div style="text-align:right;">If a link fails, check file path.</div>
     </footer>
   </div>
 
@@ -246,3 +266,4 @@
   </script>
 </body>
 </html>
+
