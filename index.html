@@ -111,11 +111,11 @@
 
     .cover {
       width: 100%;
-      aspect-ratio: 1200 / 1600; /* Enhancement: Prevents layout shift */
+      height: auto; /* Let image height scale automatically */
       border-radius: 14px;
       display: block;
       background-color: #0e1116;
-      object-fit: contain; /* Changed from 'cover' to 'contain' to ensure the full title is visible on all screen sizes */
+      /* aspect-ratio and object-fit removed to allow for a perfect fit based on the image's own dimensions */
     }
 
     .note {
@@ -691,5 +691,6 @@
   </script>
 </body>
 </html>
+
 
 
